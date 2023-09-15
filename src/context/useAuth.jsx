@@ -23,13 +23,15 @@ const AuthProvider = ({ children }) => {
 		const listen = onAuthStateChanged(auth, (user) => {
 			if (user) {
 				setUser(user);
+			} else {
+				setUser(null);
 			}
 			setIsLoading(false);
 		});
 		return () => {
 			listen();
 		};
-	}, [navigate]);
+	}, []);
 
 	const register = (email, password) => {
 		return createUserWithEmailAndPassword(auth, email, password);
@@ -47,6 +49,7 @@ const AuthProvider = ({ children }) => {
 	};
 
 	const logout = () => {
+		navigate(0);
 		return signOut(auth);
 	};
 

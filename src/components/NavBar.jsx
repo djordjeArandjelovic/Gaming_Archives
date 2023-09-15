@@ -1,13 +1,5 @@
 import React from "react";
-import {
-	Button,
-	Heading,
-	HStack,
-	Image,
-	Input,
-	Show,
-	Text,
-} from "@chakra-ui/react";
+import { Heading, HStack, Image, Show, Text } from "@chakra-ui/react";
 import logo from "../assets/star.png";
 import { Link } from "react-router-dom";
 import SearchGames from "./SearchGames";
@@ -18,7 +10,6 @@ import { useAuth } from "../context/useAuth";
 
 const NavBar = () => {
 	const { user } = useAuth();
-	console.log(user);
 	return (
 		<>
 			{/* HEADING */}
@@ -34,6 +25,7 @@ const NavBar = () => {
 			>
 				The Gaming Archives
 			</Heading>
+			{/* DISPLAY USER */}
 			<Heading textAlign={"center"}>{user ? `${user.email}` : null}</Heading>
 			{/* MAIN HSTACK */}
 			<HStack

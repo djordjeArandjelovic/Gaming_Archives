@@ -26,6 +26,7 @@ import {
 	faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import saber from "../assets/saber.png";
+import { useAuth } from "../context/useAuth";
 
 // REGEX
 const PSW_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -35,6 +36,7 @@ const SignUp = () => {
 	const navigate = useNavigate();
 	const toast = useToast();
 	const nameRef = useRef();
+	const { register } = useAuth();
 
 	const [email, setEmail] = useState("");
 	const [validEmail, setValidEmail] = useState(false);
@@ -46,6 +48,7 @@ const SignUp = () => {
 	const [showPassword, setShowPassword] = useState(false);
 
 	const [success, setSuccess] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 	const [errMsg, setErrMsg] = useState("");
 
 	useEffect(() => {
@@ -62,35 +65,39 @@ const SignUp = () => {
 		setValidPsw(pswRes);
 	}, [psw]);
 
+	// SIGN UP
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		// if (!email || !psw || !validEmail || !validPsw) {
-		// 	setErrMsg("Invalid entry");
-		// 	return;
-		// } else if (validEmail && validPsw) {
-		// 	try {
-		// 		await register(email, psw);
-		// 		toast({
-		// 			title: "Success.",
-		// 			description: `User ${email} successfully registered!`,
-		// 			status: "success",
-		// 			duration: 2500,
-		// 			isClosable: true,
-		// 			position: "top",
-		// 		});
-		// 	} catch (error) {
-		// 		toast({
-		// 			title: "Error.",
-		// 			description: error?.message,
-		// 			status: "error",
-		// 			duration: 2500,
-		// 			isClosable: true,
-		// 			position: "top",
-		// 		});
-		// 	} finally {
-		// 		navigate("/");
-		// 	}
-		// }
+		if (!email || !psw || !validEmail || !validPsw) {
+			setErrMsg("Invalid entry");
+			return;
+		} else if (validEmail && validPsw) {
+			try {
+				setIsLoading(true);
+				await register(email, psw);
+				toast({
+					title: "Success.",
+					description: `User ${email} successfully registered!`,
+					status: "success",
+					duration: 2500,
+					isClosable: true,
+					position: "top",
+				});
+				navigate("/");
+			} catch (error) {
+				toast({
+					title: "Error.",
+					description: error?.message,
+					status: "error",
+					duration: 2500,
+					isClosable: true,
+					position: "top",
+				});
+			} finally {
+				setIsLoading(false);
+			}
+		}
 	};
 	return (
 		<>
