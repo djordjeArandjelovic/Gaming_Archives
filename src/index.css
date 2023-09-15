@@ -1,0 +1,179 @@
+@font-face {
+	font-family: SpaceGrotesk;
+	src: url(/src/fonts/SpaceGrotesk-VariableFont_wght.ttf);
+}
+
+@font-face {
+	font-family: StarWars;
+	src: url(/src/fonts/Starjedi.ttf);
+}
+
+/* SIGN UP FORM VALIDATION */
+.hide {
+	display: none;
+}
+
+.valid {
+	color: limegreen;
+	margin-left: 0.25rem;
+}
+
+.invalid {
+	color: red;
+	margin-left: 0.25rem;
+}
+
+.instructions {
+	font-size: 0.75rem;
+	border-radius: 0.5rem;
+	background: #000;
+	color: #fff;
+	padding: 0.25rem;
+	bottom: -10px;
+	margin-top: 0.5rem;
+	display: block;
+}
+
+.instructions > svg {
+	margin-right: 0.25rem;
+}
+
+.errmsg {
+	background-color: lightpink;
+	color: firebrick;
+	font-weight: bold;
+	padding: 0.5rem;
+	margin-bottom: 0.5rem;
+	text-align: center;
+	border-radius: 0.375rem;
+}
+
+.purple {
+	/* color: #a381a6; */
+	color: #974ec3;
+}
+.skyblue {
+	color: #64ccc5;
+}
+.green {
+	color: #aed8cc;
+}
+
+.login {
+	position: relative;
+}
+
+/* .login::before {
+	content: "Hello there...";
+	font-size: 14px;
+	position: absolute;
+	top: 0.4rem;
+	left: 2rem;
+} */
+
+.obiWan {
+	position: relative;
+}
+
+.obiWan::before {
+	content: open-quote;
+}
+
+.closeQuote::after {
+	content: close-quote;
+}
+
+.obiWan::after {
+	content: "obi Wan Kenobi, Clone Wars.";
+	font-size: 10px;
+	position: absolute;
+	bottom: -2rem;
+	right: 4rem;
+}
+
+.saberHolder {
+	position: relative;
+}
+
+.saber {
+	position: absolute;
+	transform: rotate(90deg);
+	top: -4.3rem;
+	left: -2.5rem;
+	z-index: 5;
+}
+/* .saber {
+	position: absolute;
+	transform: rotate(90deg);
+	top: -4.3rem;
+	left: -0.6rem;
+} */
+
+.signUpStack {
+	position: relative;
+}
+
+.leftSaber {
+	position: absolute;
+	left: -10rem;
+	bottom: 3rem;
+	z-index: 2;
+}
+
+.sithSaber {
+	position: absolute;
+	left: -4.4rem;
+	bottom: 14rem;
+	height: 30px;
+	width: 20px;
+	background-color: red;
+	border-top-left-radius: 30%;
+	border-top-right-radius: 30%;
+	transition: 1s;
+}
+.sithSaber:hover {
+	height: 330px;
+	background-color: rgb(251, 56, 56);
+}
+
+.rightSaber {
+	position: absolute;
+	right: -10rem;
+	bottom: 3rem;
+}
+
+.jediSaber {
+	position: absolute;
+	right: -4.3rem;
+	bottom: 14rem;
+	height: 30px;
+	width: 20px;
+	background-color: limegreen;
+	border-top-left-radius: 30%;
+	border-top-right-radius: 30%;
+	transition: 1s;
+}
+.jediSaber:hover {
+	height: 330px;
+	background-color: rgb(125, 234, 125);
+}
+
+.yoda {
+	position: relative;
+}
+
+.yoda::before {
+	content: open-quote;
+}
+
+.yoda span::after {
+	content: close-quote;
+}
+
+.yoda::after {
+	content: "Yoda, Star Wars Episode v";
+	position: absolute;
+	bottom: -1rem;
+	right: 0;
+	font-size: 10px;
+}
