@@ -34,7 +34,7 @@ const NavBar = () => {
 			>
 				The Gaming Archives
 			</Heading>
-			<Heading>{user ? `${user.email}` : null}</Heading>
+			<Heading textAlign={"center"}>{user ? `${user.email}` : null}</Heading>
 			{/* MAIN HSTACK */}
 			<HStack
 				justify={"space-between"}

@@ -33,12 +33,38 @@ const Login = () => {
 	const toast = useToast();
 	const navigate = useNavigate();
 	const [isLoading, setIsLoading] = useState(false);
-	const { googleSignIn } = useAuth();
+	const { googleSignIn, login } = useAuth();
 
-	const handleSubmit = (e) => {
+	// LOG IN
+	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		try {
+			setIsLoading(true);
+			await login(email, psw);
+			toast({
+				title: "Success.",
+				description: `Welcome ${email}`,
+				status: "success",
+				duration: 2500,
+				isClosable: true,
+				position: "top",
+			});
+		} catch (error) {
+			toast({
+				title: "Error.",
+				description: error?.message,
+				status: "error",
+				duration: 2500,
+				isClosable: true,
+				position: "top",
+			});
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
+	// LOG IN WITH GOOGLE
 	const handleGoogle = async () => {
 		try {
 			await googleSignIn();

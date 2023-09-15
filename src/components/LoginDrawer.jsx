@@ -31,12 +31,40 @@ const LoginDrawer = () => {
 	const [email, setEmail] = useState("");
 	const [psw, setPsw] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
-	const { googleSignIn } = useAuth();
+	const { googleSignIn, login, user, logout } = useAuth();
 
+	// DB
+
+	// LOG IN
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		try {
+			setIsLoading(true);
+			await login(email, psw);
+			toast({
+				title: "Success.",
+				description: `Welcome ${email}`,
+				status: "success",
+				duration: 2500,
+				isClosable: true,
+				position: "top",
+			});
+		} catch (error) {
+			toast({
+				title: "Error.",
+				description: error?.message,
+				status: "error",
+				duration: 2500,
+				isClosable: true,
+				position: "top",
+			});
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
+	// LOG IN WITH GOOGLE
 	const handleGoogle = async () => {
 		try {
 			await googleSignIn();
@@ -52,6 +80,14 @@ const LoginDrawer = () => {
 			});
 		}
 	};
+
+	if (user) {
+		return (
+			<Button colorScheme={"green"} onClick={logout}>
+				Logout
+			</Button>
+		);
+	}
 
 	return (
 		<>
