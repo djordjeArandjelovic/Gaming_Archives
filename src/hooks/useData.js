@@ -1,6 +1,5 @@
 import { CanceledError } from "axios";
 import { useEffect, useState } from "react";
-import { useGlobalContext } from "../context/context";
 import apiClient from "../services/api-client";
 
 const useData = (endpoint, requestConfig, deps = []) => {
