@@ -30,7 +30,10 @@ const Main = () => {
 			{/* MAIN-GRID */}
 			<GridItem area={"main"}>
 				<Show breakpoint="(max-width: 991px)">
-					<GenreMenu />
+					<GenreMenu
+						selectedGenre={selectedGenre}
+						onSelectGenre={(genre) => setSelectedGenre(genre)}
+					/>
 				</Show>
 				<GameGrid
 					selectedGenre={selectedGenre}

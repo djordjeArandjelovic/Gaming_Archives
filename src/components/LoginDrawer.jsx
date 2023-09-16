@@ -24,6 +24,7 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import saber from "../assets/saber.png";
 import { useAuth } from "../context/useAuth";
+import GoogleButton from "react-google-button";
 
 const LoginDrawer = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -183,7 +184,7 @@ const LoginDrawer = () => {
 									>
 										{isLoading ? "Please wait..." : "Login"}
 									</Button>
-									<Button
+									{/* <Button
 										colorScheme={"green"}
 										type="button"
 										onClick={handleGoogle}
@@ -191,7 +192,17 @@ const LoginDrawer = () => {
 										isDisabled={isLoading ? true : false}
 									>
 										{isLoading ? "Please wait..." : "Sign in with GOOGLE"}
-									</Button>
+									</Button> */}
+									<Box
+										display={"flex"}
+										justifyContent={"center"}
+										alignItems={"center"}
+									>
+										<GoogleButton
+											onClick={handleGoogle}
+											isDisabled={isLoading ? true : false}
+										/>
+									</Box>
 								</Stack>
 							</form>
 							<Stack pt={6}>

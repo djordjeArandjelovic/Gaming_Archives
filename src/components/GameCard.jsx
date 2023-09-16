@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import {
 	Card,
@@ -24,6 +24,8 @@ import { Icon } from "@chakra-ui/react";
 import { FaRegHeart } from "react-icons/fa6";
 import { FaHeart } from "react-icons/fa6";
 import { useToast } from "@chakra-ui/react";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../firebase";
 
 const GameCard = ({ game }) => {
 	const toast = useToast();
@@ -39,6 +41,12 @@ const GameCard = ({ game }) => {
 		return color;
 	};
 
+	// DB
+	const favCollection = collection(db, "FavouriteGames");
+	const [gameID, setGameID] = useState({
+		id: "",
+	});
+
 	const icons = {
 		pc: FaWindows,
 		playstation: FaPlaystation,
@@ -51,9 +59,14 @@ const GameCard = ({ game }) => {
 		web: BsGlobe,
 	};
 
-	const favouriteGame = (id) => {
+	const favouriteGame = async (id) => {
 		game.id === id && setFavourite(!favourite);
-		console.log(favourite);
+		setGameID({
+			id: game.id,
+		});
+		console.log(game.id);
+		console.log(gameID, "GAMEID");
+
 		if (!favourite) {
 			toast({
 				title: "Success.",

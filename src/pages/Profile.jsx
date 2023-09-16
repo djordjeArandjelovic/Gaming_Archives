@@ -1,5 +1,6 @@
-import { Box, Flex, Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import React from "react";
+import { Link } from "react-router-dom";
 import CardSkeleton from "../components/CardSkeleton";
 import NavBar from "../components/NavBar";
 import { useAuth } from "../context/useAuth";
@@ -48,6 +49,15 @@ const Profile = () => {
 						>
 							user Profile:
 						</Heading>
+						<Button
+							size={"sm"}
+							width={"40%"}
+							colorScheme={"orange"}
+							fontSize={"md"}
+							fontWeight={"bold"}
+						>
+							<Link to="/edit">Edit profile</Link>
+						</Button>
 						<Text fontSize={"lg"}>Name:</Text>
 						<Text fontSize={"lg"}> email: {user?.email} </Text>
 					</Flex>
