@@ -25,6 +25,7 @@ import saber from "../assets/saber.png";
 import { Link, useNavigate } from "react-router-dom";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useAuth } from "../context/useAuth";
+import GoogleButton from "react-google-button";
 
 const Login = () => {
 	const [email, setEmail] = useState("");
@@ -175,7 +176,7 @@ const Login = () => {
 							>
 								{isLoading ? "Please wait..." : "Login"}
 							</Button>
-							<Button
+							{/* <Button
 								colorScheme={"green"}
 								type="button"
 								onClick={handleGoogle}
@@ -183,7 +184,17 @@ const Login = () => {
 								isDisabled={isLoading ? true : false}
 							>
 								{isLoading ? "Please wait..." : "Sign in with GOOGLE"}
-							</Button>
+							</Button> */}
+							<Box
+								display={"flex"}
+								justifyContent={"center"}
+								alignItems={"center"}
+							>
+								<GoogleButton
+									onClick={handleGoogle}
+									isDisabled={isLoading ? true : false}
+								/>
+							</Box>
 						</Stack>
 					</form>
 					<Stack pt={6}>

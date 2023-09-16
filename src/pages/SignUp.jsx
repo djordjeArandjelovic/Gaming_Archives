@@ -27,6 +27,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import saber from "../assets/saber.png";
 import { useAuth } from "../context/useAuth";
+import GoogleButton from "react-google-button";
 
 // REGEX
 const PSW_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -36,7 +37,7 @@ const SignUp = () => {
 	const navigate = useNavigate();
 	const toast = useToast();
 	const nameRef = useRef();
-	const { register } = useAuth();
+	const { register, googleSignIn } = useAuth();
 
 	const [email, setEmail] = useState("");
 	const [validEmail, setValidEmail] = useState(false);
@@ -99,6 +100,24 @@ const SignUp = () => {
 			}
 		}
 	};
+
+	// GOOGLE SIGN UP
+	const handleGoogle = async () => {
+		try {
+			await googleSignIn();
+			navigate("/");
+		} catch (error) {
+			toast({
+				title: "Error.",
+				description: error?.message,
+				status: "error",
+				duration: 2500,
+				isClosable: true,
+				position: "top",
+			});
+		}
+	};
+
 	return (
 		<>
 			<Flex
@@ -112,8 +131,8 @@ const SignUp = () => {
 					spacing={8}
 					mx={"auto"}
 					maxW={"lg"}
-					py={12}
-					px={6}
+					py={2}
+					px={2}
 				>
 					<Image className="leftSaber" src={saber} />
 					<Box className="sithSaber" />
@@ -245,7 +264,7 @@ const SignUp = () => {
 										</p>
 									</InputGroup>
 								</FormControl>
-								<Stack spacing={10} pt={2}>
+								<Stack spacing={4} pt={2}>
 									<Button
 										loadingText="Submitting"
 										size="lg"
@@ -264,8 +283,18 @@ const SignUp = () => {
 									>
 										Sign up
 									</Button>
+									<Box
+										display={"flex"}
+										justifyContent={"center"}
+										alignItems={"center"}
+									>
+										<GoogleButton
+											onClick={handleGoogle}
+											isDisabled={isLoading ? true : false}
+										/>
+									</Box>
 								</Stack>
-								<Stack pt={6}>
+								<Stack>
 									<Text align={"center"}>
 										Already a user?
 										<Link
