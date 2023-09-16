@@ -5,7 +5,7 @@ const CardSkeleton = () => {
 	return (
 		<Card
 			width={{
-				base: "100%",
+				base: "90%",
 				md: "250px",
 				lg: "250px",
 				xl: "250px",
