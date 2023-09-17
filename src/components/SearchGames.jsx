@@ -28,7 +28,6 @@ const SearchGames = () => {
 					fontFamily={"StarWars"}
 					fontWeight={"light"}
 					letterSpacing={"1px"}
-					color={"black"}
 					placeholder="Search games..."
 					variant="filled"
 				/>
