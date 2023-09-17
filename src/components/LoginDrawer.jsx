@@ -21,7 +21,7 @@ import {
 	useToast,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import saber from "../assets/saber.png";
 import { useAuth } from "../context/useAuth";
 import GoogleButton from "react-google-button";
@@ -33,6 +33,8 @@ const LoginDrawer = () => {
 	const [psw, setPsw] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const { googleSignIn, login, user, logout } = useAuth();
+	const toast = useToast();
+	const navigate = useNavigate();
 
 	// DB
 
@@ -68,6 +70,7 @@ const LoginDrawer = () => {
 	// LOG IN WITH GOOGLE
 	const handleGoogle = async () => {
 		try {
+			setIsLoading(true);
 			await googleSignIn();
 			navigate("/");
 		} catch (error) {
@@ -79,6 +82,8 @@ const LoginDrawer = () => {
 				isClosable: true,
 				position: "top",
 			});
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -198,10 +203,7 @@ const LoginDrawer = () => {
 										justifyContent={"center"}
 										alignItems={"center"}
 									>
-										<GoogleButton
-											onClick={handleGoogle}
-											isDisabled={isLoading ? true : false}
-										/>
+										<GoogleButton onClick={handleGoogle} />
 									</Box>
 								</Stack>
 							</form>

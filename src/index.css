@@ -177,3 +177,30 @@
 	right: 0;
 	font-size: 10px;
 }
+
+.btn-profile {
+	/* background: linear-gradient(to right, #f857a6, #ff5858); */
+	background: linear-gradient(to right, #fc354c, #0abfbc);
+}
+.btn-profile:hover {
+	background-color: #0abfbc;
+}
+
+/* .bb8 {
+	animation-name: roll;
+	animation-duration: 5s;
+	animation-iteration-count: infinite;
+	/* animation: roll 5s infinite; */
+/* } */
+
+@keyframes roll {
+	0% {
+		left: 0;
+	}
+	50% {
+		left: "2rem";
+	}
+	100% {
+		left: 0;
+	}
+}

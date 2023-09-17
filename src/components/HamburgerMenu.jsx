@@ -10,8 +10,10 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 import React from "react";
 import { Link } from "react-router-dom";
 import LoginDrawer from "./LoginDrawer";
+import { useAuth } from "../context/useAuth";
 
 const HamburgerMenu = () => {
+	const { user, logout } = useAuth();
 	return (
 		<Menu>
 			<MenuButton
@@ -28,10 +30,14 @@ const HamburgerMenu = () => {
 					<Link to={"/profile"}>Profile</Link>
 				</MenuItem>
 				<MenuItem>
-					<Link>
-						Login
-						{/* <LoginDrawer /> */}
-					</Link>
+					{!user ? (
+						<Link to={"/login"}>LogIn</Link>
+					) : (
+						<Link as={"button"} onClick={logout} to={"/"}>
+							LogOut
+						</Link>
+					)}
+					<Link>{/* <LoginDrawer /> */}</Link>
 				</MenuItem>
 			</MenuList>
 		</Menu>

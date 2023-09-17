@@ -2,11 +2,14 @@ import React from "react";
 import { BsSearch } from "react-icons/bs";
 import {
 	FormControl,
+	Image,
 	Input,
 	InputGroup,
 	InputLeftElement,
+	InputRightElement,
 } from "@chakra-ui/react";
 import { useRef } from "react";
+import bb8 from "../assets/bb8rolling.gif";
 
 const SearchGames = () => {
 	const gameRef = useRef();
@@ -25,6 +28,7 @@ const SearchGames = () => {
 					fontFamily={"StarWars"}
 					fontWeight={"light"}
 					letterSpacing={"1px"}
+					color={"black"}
 					placeholder="Search games..."
 					variant="filled"
 				/>
