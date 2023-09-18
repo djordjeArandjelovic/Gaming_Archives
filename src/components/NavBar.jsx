@@ -94,7 +94,7 @@ const NavBar = () => {
 				position={"relative"}
 			>
 				The Gaming Archives
-				<Show above={"1050px"}>
+				<Show above={"1220px"}>
 					<AnimationBB8 />
 				</Show>
 			</Heading>
