@@ -4,6 +4,7 @@ import Genres from "../components/Genres";
 import NavBar from "../components/NavBar";
 import GameGrid from "../components/GameGrid";
 import GenreMenu from "../components/GenreMenu";
+import AnimationBB8 from "../components/AnimationBB8";
 
 const Main = () => {
 	const [selectedGenre, setSelectedGenre] = useState(null);

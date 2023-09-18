@@ -1,5 +1,14 @@
 import React from "react";
-import { Box, Heading, HStack, Image, Show, Text } from "@chakra-ui/react";
+import {
+	Box,
+	Heading,
+	HStack,
+	Image,
+	Img,
+	keyframes,
+	Show,
+	Text,
+} from "@chakra-ui/react";
 import logo from "../assets/star.png";
 import { Link } from "react-router-dom";
 import SearchGames from "./SearchGames";
@@ -9,6 +18,7 @@ import HamburgerMenu from "./HamburgerMenu";
 import { useAuth } from "../context/useAuth";
 import NavBarProfile from "./NavBarProfile";
 import bb8 from "../assets/bb8rolling.gif";
+import AnimationBB8 from "./AnimationBB8";
 
 const NavBar = () => {
 	const { user } = useAuth();
@@ -85,27 +95,7 @@ const NavBar = () => {
 			>
 				The Gaming Archives
 				<Show above={"1050px"}>
-					<Box
-						width={"30%"}
-						height={"30px"}
-						position={"absolute"}
-						borderRadius={10}
-						left={"1rem"}
-						top={"0.5rem"}
-						background={"orange.400"}
-					>
-						<Image
-							className="bb8"
-							src={bb8}
-							display={"inline"}
-							height={"30px"}
-							position={"absolute"}
-							borderRadius={10}
-							left={"0rem"}
-
-							// top={"0.5rem"}
-						/>
-					</Box>
+					<AnimationBB8 />
 				</Show>
 			</Heading>
 		</>
