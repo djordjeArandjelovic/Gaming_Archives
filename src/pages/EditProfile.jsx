@@ -6,9 +6,8 @@ import {
 	Heading,
 	Input,
 } from "@chakra-ui/react";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import React from "react";
-import { useEffect } from "react";
 import { useState } from "react";
 import NavBar from "../components/NavBar";
 import { useAuth } from "../context/useAuth";
@@ -35,7 +34,7 @@ const EditProfile = () => {
 		e.preventDefault();
 		// console.log(newUser, "submit");
 
-		await addDoc(usersCollection, newUser);
+		await setDoc(doc(db, "users", newUser), user.uid);
 		setNewUser({
 			email: "",
 			firstName: "",
@@ -53,7 +52,7 @@ const EditProfile = () => {
 				<FormControl as={"form"} onSubmit={handleSubmit}>
 					<FormLabel>First Name:</FormLabel>
 					<Input
-						value={newUser.name}
+						value={newUser.firstName}
 						onChange={(e) =>
 							setNewUser({ ...newUser, firstName: e.target.value })
 						}

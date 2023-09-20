@@ -288,10 +288,7 @@ const SignUp = () => {
 										justifyContent={"center"}
 										alignItems={"center"}
 									>
-										<GoogleButton
-											onClick={handleGoogle}
-											isDisabled={isLoading ? true : false}
-										/>
+										<GoogleButton onClick={handleGoogle} />
 									</Box>
 								</Stack>
 								<Stack>

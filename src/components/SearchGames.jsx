@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import {
 	FormControl,
@@ -9,10 +9,14 @@ import {
 	InputRightElement,
 } from "@chakra-ui/react";
 import { useRef } from "react";
-import bb8 from "../assets/bb8rolling.gif";
 
 const SearchGames = () => {
 	const gameRef = useRef();
+	const [newUser, setNewUser] = useState({
+		email: "",
+		firstName: "",
+		lastName: "",
+	});
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
