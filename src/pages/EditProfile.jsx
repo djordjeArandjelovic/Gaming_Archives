@@ -34,9 +34,9 @@ const EditProfile = () => {
 		e.preventDefault();
 		// console.log(newUser, "submit");
 
-		await setDoc(doc(db, "users", newUser), user.uid);
+		await addDoc(collection(db, "users", newUser), user.uid);
 		setNewUser({
-			email: "",
+			email: user.email || "",
 			firstName: "",
 			lastName: "",
 		});

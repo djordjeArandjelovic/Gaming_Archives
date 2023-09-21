@@ -12,11 +12,6 @@ import { useRef } from "react";
 
 const SearchGames = () => {
 	const gameRef = useRef();
-	const [newUser, setNewUser] = useState({
-		email: "",
-		firstName: "",
-		lastName: "",
-	});
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
