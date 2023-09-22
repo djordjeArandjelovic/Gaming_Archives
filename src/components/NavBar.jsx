@@ -17,10 +17,9 @@ import ColorSwitchMode from "./ColorSwitchMode";
 import HamburgerMenu from "./HamburgerMenu";
 import { useAuth } from "../context/useAuth";
 import NavBarProfile from "./NavBarProfile";
-import bb8 from "../assets/bb8rolling.gif";
 import AnimationBB8 from "./AnimationBB8";
 
-const NavBar = () => {
+const NavBar = ({ onSearch }) => {
 	const { user } = useAuth();
 	return (
 		<>
@@ -43,7 +42,7 @@ const NavBar = () => {
 						pointerEvents="none"
 					/>
 					{/* SEARCH GAMES */}
-					<SearchGames />
+					<SearchGames onSearch={onSearch} />
 				</HStack>
 				<Show breakpoint="(min-width: 680px)">
 					<HStack gap={10} width={"25%"}>
