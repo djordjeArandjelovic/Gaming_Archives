@@ -4,7 +4,7 @@ const useGames = (selectedGenre, searchText) =>
 	useData(
 		"/games",
 		{ params: { genres: selectedGenre?.id, search: searchText } },
-		[selectedGenre?.id]
+		[selectedGenre?.id, searchText]
 	);
 
 export default useGames;

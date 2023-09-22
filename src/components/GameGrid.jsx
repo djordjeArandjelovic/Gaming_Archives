@@ -19,13 +19,6 @@ const GameGrid = ({ selectedGenre, searchText }) => {
 	return (
 		<>
 			{error && <Text color={"red.500"}>{error}</Text>}
-			{/* <Box mt={2} width={"sm"} ml={3}>
-				<SearchGames
-					handleSubmit={handleSubmit}
-					search={search}
-					setSearch={setSearch}
-				/>
-			</Box> */}
 			<SimpleGrid
 				columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
 				spacing={5}
