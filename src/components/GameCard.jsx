@@ -32,8 +32,8 @@ const GameCard = ({ game }) => {
 	const [favourite, setFavourite] = useState(false);
 
 	const croppedUrl = (url) => {
-		const index = url.indexOf("media/") + "media/".length;
-		return url.slice(0, index) + "crop/600/400/" + url.slice(index);
+		const index = url?.indexOf("media/") + "media/".length;
+		return url?.slice(0, index) + "crop/600/400/" + url?.slice(index);
 	};
 
 	const scoreColor = (score) => {
@@ -98,8 +98,8 @@ const GameCard = ({ game }) => {
 					boxShadow: "3px 6px 10px rgba(255, 0, 255, 0.5)",
 				}}
 			>
-				<Image src={croppedUrl(game.background_image)} />
-				<Button onClick={() => favouriteGame(game.id)}>
+				<Image src={croppedUrl(game?.background_image)} />
+				<Button onClick={() => favouriteGame(game?.id)}>
 					<Icon as={favourite ? FaHeart : FaRegHeart} boxSize={"18px"} />
 				</Button>
 
@@ -108,22 +108,22 @@ const GameCard = ({ game }) => {
 						<HStack>
 							{game?.parent_platforms?.map((platform) => (
 								<Icon
-									key={platform.platform.id}
+									key={platform?.platform.id}
 									color="gray.500"
-									as={icons[platform.platform.slug]}
+									as={icons[platform?.platform.slug]}
 								/>
 							))}
 						</HStack>
 						<Badge
-							colorScheme={scoreColor(game.metacritic)}
+							colorScheme={scoreColor(game?.metacritic)}
 							fontSize="14px"
 							paddingX={1.5}
 							borderRadius={4}
 						>
-							{game.metacritic}
+							{game?.metacritic}
 						</Badge>
 					</HStack>
-					<Heading fontSize="xl">{game.name}</Heading>
+					<Heading fontSize="xl">{game?.name}</Heading>
 				</CardBody>
 			</Card>
 		</>

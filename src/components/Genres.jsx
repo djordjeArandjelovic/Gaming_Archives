@@ -15,8 +15,8 @@ const Genres = ({ onSelectGenre, selectedGenre }) => {
 	const { data, isLoading, error } = useData("/genres");
 
 	const croppedUrl = (url) => {
-		const index = url.indexOf("media/") + "media/".length;
-		return url.slice(0, index) + "crop/600/400/" + url.slice(index);
+		const index = url?.indexOf("media/") + "media/".length;
+		return url?.slice(0, index) + "crop/600/400/" + url?.slice(index);
 	};
 
 	if (isLoading) return <Spinner />;
@@ -44,10 +44,10 @@ const Genres = ({ onSelectGenre, selectedGenre }) => {
 					</HStack>
 				</ListItem>
 				{data.map((genre) => (
-					<ListItem key={genre.id} paddingY={"5px"}>
+					<ListItem key={genre?.id} paddingY={"5px"}>
 						<HStack>
 							<Image
-								src={croppedUrl(genre.image_background)}
+								src={croppedUrl(genre?.image_background)}
 								objectFit="cover"
 								boxSize={"32px"}
 								borderRadius={8}
@@ -55,12 +55,12 @@ const Genres = ({ onSelectGenre, selectedGenre }) => {
 							<Button
 								variant="link"
 								fontSize={"lg"}
-								value={genre.name}
-								fontWeight={genre.id === selectedGenre?.id ? "bold" : "normal"}
-								color={genre.id === selectedGenre?.id ? "purple.500" : ""}
+								value={genre?.name}
+								fontWeight={genre?.id === selectedGenre?.id ? "bold" : "normal"}
+								color={genre?.id === selectedGenre?.id ? "purple.500" : ""}
 								onClick={() => onSelectGenre(genre)}
 							>
-								{genre.name}
+								{genre?.name}
 							</Button>
 						</HStack>
 					</ListItem>
