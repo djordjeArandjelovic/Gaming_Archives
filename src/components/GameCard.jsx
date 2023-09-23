@@ -8,6 +8,7 @@ import {
 	HStack,
 	Badge,
 	Button,
+	Text,
 } from "@chakra-ui/react";
 import {
 	FaWindows,
@@ -60,7 +61,7 @@ const GameCard = ({ game }) => {
 	};
 
 	const favouriteGame = async (id) => {
-		game.id === id && setFavourite(!favourite);
+		game.id === id && setFavourite(true);
 		setGameID({
 			id: game.id,
 		});
@@ -99,10 +100,11 @@ const GameCard = ({ game }) => {
 				}}
 			>
 				<Image src={croppedUrl(game?.background_image)} />
-				<Button onClick={() => favouriteGame(game?.id)}>
+				{/* TODO: LOGGING THE WHOLE GAME OBJECT > SEND IT TO FIREBASE AND RENDER
+				IN PROFILE  */}
+				<Button onClick={() => console.log(game)}>
 					<Icon as={favourite ? FaHeart : FaRegHeart} boxSize={"18px"} />
 				</Button>
-
 				<CardBody>
 					<HStack marginBottom={4} justifyContent="space-between">
 						<HStack>

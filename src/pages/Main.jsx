@@ -1,13 +1,15 @@
-import { Grid, GridItem, Show } from "@chakra-ui/react";
+import { Flex, Grid, GridItem, Show } from "@chakra-ui/react";
 import React, { useState } from "react";
 import Genres from "../components/Genres";
 import NavBar from "../components/NavBar";
 import GameGrid from "../components/GameGrid";
 import GenreMenu from "../components/GenreMenu";
+import ToggleView from "../components/ToggleView";
 
 const Main = () => {
 	const [selectedGenre, setSelectedGenre] = useState(null);
 	const [searchText, setSearchText] = useState("");
+	const [toggleView, setToggleView] = useState(true);
 	// console.log(searchText);
 	return (
 		<Grid
@@ -36,16 +38,22 @@ const Main = () => {
 			</Show>
 			{/* MAIN-GRID */}
 			<GridItem area={"main"}>
-				<Show breakpoint="(max-width: 991px)">
-					<GenreMenu
-						selectedGenre={selectedGenre}
-						onSelectGenre={(genre) => setSelectedGenre(genre)}
-					/>
-				</Show>
+				<Flex>
+					<Show above="md">
+						<ToggleView toggleView={toggleView} setToggleView={setToggleView} />
+					</Show>
+					<Show breakpoint="(max-width: 991px)">
+						<GenreMenu
+							selectedGenre={selectedGenre}
+							onSelectGenre={(genre) => setSelectedGenre(genre)}
+						/>
+					</Show>
+				</Flex>
 				<GameGrid
 					searchText={searchText}
 					selectedGenre={selectedGenre}
 					onSelectGenre={(genre) => setSelectedGenre(genre)}
+					toggleView={toggleView}
 				/>
 			</GridItem>
 		</Grid>
