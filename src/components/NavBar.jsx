@@ -89,7 +89,7 @@ const NavBar = ({ onSearch }) => {
 				fontFamily={"StarWars"}
 				fontWeight="normal"
 				letterSpacing={"1px"}
-				color={"orange"}
+				// color={"orange"}
 				position={"relative"}
 			>
 				The Gaming Archives

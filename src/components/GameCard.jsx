@@ -9,6 +9,15 @@ import {
 	Badge,
 	Button,
 	Text,
+	Box,
+	Img,
+	Modal,
+	ModalBody,
+	ModalCloseButton,
+	ModalContent,
+	ModalHeader,
+	ModalOverlay,
+	VStack,
 } from "@chakra-ui/react";
 import {
 	FaWindows,
@@ -28,15 +37,31 @@ import { useToast } from "@chakra-ui/react";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../firebase";
 
-const GameCard = ({ game }) => {
+const GameCard = ({ game, toggleView }) => {
 	const toast = useToast();
 	const [favourite, setFavourite] = useState(false);
 
+	// SCREENSHOT GALLERY
+	const [isOpen, setIsOpen] = useState(false);
+	const [selectedScreenshot, setSelectedScreenshot] = useState(null);
+
+	const onOpen = (screenshot) => {
+		setSelectedScreenshot(screenshot);
+		setIsOpen(true);
+	};
+	const onClose = () => {
+		setIsOpen(false);
+	};
+
+	const filteredScreenshots = game?.short_screenshots.slice(1);
+
+	// BETTER QUALITY PICTURE
 	const croppedUrl = (url) => {
 		const index = url?.indexOf("media/") + "media/".length;
 		return url?.slice(0, index) + "crop/600/400/" + url?.slice(index);
 	};
 
+	// COLOR FOR BADGE
 	const scoreColor = (score) => {
 		let color = score > 75 ? "green" : score > 60 ? "yellow" : "red";
 		return color;
@@ -99,7 +124,13 @@ const GameCard = ({ game }) => {
 					boxShadow: "3px 6px 10px rgba(255, 0, 255, 0.5)",
 				}}
 			>
-				<Image src={croppedUrl(game?.background_image)} />
+				<Image
+					src={
+						toggleView === false
+							? game?.background_image
+							: croppedUrl(game?.background_image)
+					}
+				/>
 				{/* TODO: LOGGING THE WHOLE GAME OBJECT > SEND IT TO FIREBASE AND RENDER
 				IN PROFILE  */}
 				<Button onClick={() => console.log(game)}>
@@ -108,6 +139,7 @@ const GameCard = ({ game }) => {
 				<CardBody>
 					<HStack marginBottom={4} justifyContent="space-between">
 						<HStack>
+							{toggleView === false ? <Text>Platforms:</Text> : null}
 							{game?.parent_platforms?.map((platform) => (
 								<Icon
 									key={platform?.platform.id}
@@ -116,16 +148,64 @@ const GameCard = ({ game }) => {
 								/>
 							))}
 						</HStack>
-						<Badge
-							colorScheme={scoreColor(game?.metacritic)}
-							fontSize="14px"
-							paddingX={1.5}
-							borderRadius={4}
-						>
-							{game?.metacritic}
-						</Badge>
+						<HStack>
+							{toggleView === false ? <Text>Score:</Text> : null}
+							<Badge
+								colorScheme={scoreColor(game?.metacritic)}
+								fontSize={toggleView === false ? "24px" : "14px"}
+								paddingX={1.5}
+								borderRadius={4}
+							>
+								{game?.metacritic}
+							</Badge>
+						</HStack>
 					</HStack>
-					<Heading fontSize="xl">{game?.name}</Heading>
+					<Heading
+						fontSize={toggleView === false ? "3xl" : "xl"}
+						textAlign={toggleView === false ? "center" : "left"}
+					>
+						{game?.name}
+					</Heading>
+					{toggleView === false ? (
+						<>
+							<Text mt={2} fontSize={"sm"}>
+								Release date: {game?.released}
+							</Text>
+							<Text fontSize={"xl"}>Screenshots:</Text>
+							<Box
+								display={"grid"}
+								gridTemplateColumns={"repeat(2, 1fr)"}
+								gap={2}
+							>
+								{filteredScreenshots.map((screenshot) => (
+									<Box key={screenshot.id}>
+										<Img
+											margin={"auto"}
+											src={screenshot.image}
+											transition={"0.5s"}
+											_hover={{
+												transform: "scale(1.05)",
+											}}
+											cursor={"zoom-in"}
+											onClick={() => onOpen(screenshot)}
+										/>
+									</Box>
+								))}
+								<Modal size={"4xl"} isOpen={isOpen} onClose={onClose}>
+									<ModalOverlay />
+									<ModalContent>
+										<ModalHeader>{game?.name}</ModalHeader>
+										<ModalCloseButton />
+										<ModalBody>
+											{selectedScreenshot && (
+												<Image src={selectedScreenshot.image} />
+											)}
+										</ModalBody>
+									</ModalContent>
+								</Modal>
+							</Box>
+						</>
+					) : null}
 				</CardBody>
 			</Card>
 		</>

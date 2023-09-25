@@ -5,6 +5,7 @@ import NavBar from "../components/NavBar";
 import GameGrid from "../components/GameGrid";
 import GenreMenu from "../components/GenreMenu";
 import ToggleView from "../components/ToggleView";
+import MoreDetails from "../components/MoreDetails";
 
 const Main = () => {
 	const [selectedGenre, setSelectedGenre] = useState(null);
@@ -36,11 +37,19 @@ const Main = () => {
 					/>
 				</GridItem>
 			</Show>
+
 			{/* MAIN-GRID */}
 			<GridItem area={"main"}>
+				{/* ABOVE CARDS */}
 				<Flex>
 					<Show above="md">
 						<ToggleView toggleView={toggleView} setToggleView={setToggleView} />
+					</Show>
+					<Show breakpoint="(max-width: 767px)">
+						<MoreDetails
+							toggleView={toggleView}
+							setToggleView={setToggleView}
+						/>
 					</Show>
 					<Show breakpoint="(max-width: 991px)">
 						<GenreMenu
@@ -49,6 +58,7 @@ const Main = () => {
 						/>
 					</Show>
 				</Flex>
+				{/* CARDS */}
 				<GameGrid
 					searchText={searchText}
 					selectedGenre={selectedGenre}

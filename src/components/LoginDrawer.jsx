@@ -89,7 +89,12 @@ const LoginDrawer = () => {
 
 	if (user) {
 		return (
-			<Button colorScheme={"green"} onClick={logout}>
+			<Button
+				colorScheme={"green"}
+				onClick={logout}
+				fontFamily={"StarWars"}
+				fontWeight={"light"}
+			>
 				Logout
 			</Button>
 		);
@@ -189,15 +194,6 @@ const LoginDrawer = () => {
 									>
 										{isLoading ? "Please wait..." : "Login"}
 									</Button>
-									{/* <Button
-										colorScheme={"green"}
-										type="button"
-										onClick={handleGoogle}
-										mt={3}
-										isDisabled={isLoading ? true : false}
-									>
-										{isLoading ? "Please wait..." : "Sign in with GOOGLE"}
-									</Button> */}
 									<Box
 										display={"flex"}
 										justifyContent={"center"}
