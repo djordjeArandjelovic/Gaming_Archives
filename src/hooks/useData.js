@@ -32,7 +32,7 @@ const useData = (endpoint, requestConfig, deps = []) => {
 		return () => controller.abort();
 	}, [...deps]);
 
-	return { data, error, isLoading };
+	return { data, setData, error, isLoading };
 };
 
 export default useData;

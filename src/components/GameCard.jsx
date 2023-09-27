@@ -34,26 +34,18 @@ import { Icon } from "@chakra-ui/react";
 import { FaRegHeart } from "react-icons/fa6";
 import { FaHeart } from "react-icons/fa6";
 import { useToast } from "@chakra-ui/react";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc } from "firebase/firestore";
 import { db } from "../firebase";
+import { useAuth } from "../context/useAuth";
 
 const GameCard = ({ game, toggleView }) => {
+	const { user } = useAuth();
 	const toast = useToast();
 	const [favourite, setFavourite] = useState(false);
 
 	// SCREENSHOT GALLERY
 	const [isOpen, setIsOpen] = useState(false);
 	const [selectedScreenshot, setSelectedScreenshot] = useState(null);
-
-	const onOpen = (screenshot) => {
-		setSelectedScreenshot(screenshot);
-		setIsOpen(true);
-	};
-	const onClose = () => {
-		setIsOpen(false);
-	};
-
-	const filteredScreenshots = game?.short_screenshots.slice(1);
 
 	// BETTER QUALITY PICTURE
 	const croppedUrl = (url) => {
@@ -67,11 +59,7 @@ const GameCard = ({ game, toggleView }) => {
 		return color;
 	};
 
-	// DB
-	const favCollection = collection(db, "FavouriteGames");
-	const [gameID, setGameID] = useState({
-		id: "",
-	});
+	// PLATFORM ICONS
 
 	const icons = {
 		pc: FaWindows,
@@ -85,15 +73,27 @@ const GameCard = ({ game, toggleView }) => {
 		web: BsGlobe,
 	};
 
-	const favouriteGame = async (id) => {
-		game.id === id && setFavourite(true);
-		setGameID({
-			id: game.id,
-		});
-		console.log(game.id);
-		console.log(gameID, "GAMEID");
+	// SCREENSHOT MODAL
 
-		if (!favourite) {
+	const onOpen = (screenshot) => {
+		setSelectedScreenshot(screenshot);
+		setIsOpen(true);
+	};
+	const onClose = () => {
+		setIsOpen(false);
+	};
+
+	const filteredScreenshots = game?.short_screenshots.slice(1);
+
+	// DB;
+	const usersCollection = collection(db, "users");
+
+	const addGame = async (gameData) => {
+		try {
+			const userUIDDoc = doc(usersCollection, user?.uid);
+			const userFavGames = collection(userUIDDoc, "favourites");
+
+			await addDoc(userFavGames, gameData);
 			toast({
 				title: "Success.",
 				description: `${game.name} added to your favourites.`,
@@ -102,15 +102,24 @@ const GameCard = ({ game, toggleView }) => {
 				isClosable: false,
 				position: "top-right",
 			});
-		} else {
+		} catch (error) {
+			console.log(error, "error from addGame");
+		}
+	};
+
+	const handleSave = () => {
+		if (!user) {
 			toast({
-				title: "Success.",
-				description: `${game.name} removed from your favourites.`,
-				status: "success",
+				title: "Error.",
+				description: "Please log in.",
+				status: "error",
 				duration: 2500,
 				isClosable: false,
-				position: "top-right",
+				position: "top",
 			});
+			setFavourite(true);
+		} else {
+			addGame(game);
 		}
 	};
 
@@ -131,9 +140,8 @@ const GameCard = ({ game, toggleView }) => {
 							: croppedUrl(game?.background_image)
 					}
 				/>
-				{/* TODO: LOGGING THE WHOLE GAME OBJECT > SEND IT TO FIREBASE AND RENDER
-				IN PROFILE  */}
-				<Button onClick={() => console.log(game)}>
+
+				<Button onClick={handleSave}>
 					<Icon as={favourite ? FaHeart : FaRegHeart} boxSize={"18px"} />
 				</Button>
 				<CardBody>
