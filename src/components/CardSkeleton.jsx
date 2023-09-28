@@ -1,9 +1,17 @@
-import { Card, CardBody, Skeleton, SkeletonText } from "@chakra-ui/react";
+import {
+	Card,
+	CardBody,
+	Skeleton,
+	SkeletonText,
+	useColorMode,
+} from "@chakra-ui/react";
 import React from "react";
 
 const CardSkeleton = () => {
+	const { colorMode } = useColorMode();
 	return (
 		<Card
+			bg={colorMode === "dark" ? "#202020" : ""}
 			width={{
 				base: "90%",
 				md: "250px",

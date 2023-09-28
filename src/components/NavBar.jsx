@@ -8,6 +8,7 @@ import {
 	keyframes,
 	Show,
 	Text,
+	useColorMode,
 } from "@chakra-ui/react";
 import logo from "../assets/star.png";
 import { Link } from "react-router-dom";
@@ -21,10 +22,12 @@ import AnimationBB8 from "./AnimationBB8";
 
 const NavBar = ({ onSearch }) => {
 	const { user } = useAuth();
+	const { colorMode } = useColorMode();
 	return (
 		<>
 			{/* MAIN HSTACK */}
 			<HStack
+				bg={colorMode === "dark" ? "#151515" : ""}
 				justify={"space-between"}
 				padding={{
 					base: "0.2rem 0.5rem",
@@ -45,7 +48,7 @@ const NavBar = ({ onSearch }) => {
 					<SearchGames onSearch={onSearch} />
 				</HStack>
 				<Show breakpoint="(min-width: 680px)">
-					<HStack gap={10} width={"25%"}>
+					<HStack gap={10} mr={"5%"}>
 						<Link className="skyblue" to="/">
 							<Text
 								_hover={{ color: "#9F7AEA" }}
@@ -82,6 +85,7 @@ const NavBar = ({ onSearch }) => {
 			</HStack>
 			{/* HEADING */}
 			<Heading
+				bg={colorMode === "dark" ? "#151515" : ""}
 				className="heading"
 				fontSize={"3xl"}
 				textAlign="center"
@@ -89,7 +93,6 @@ const NavBar = ({ onSearch }) => {
 				fontFamily={"StarWars"}
 				fontWeight="normal"
 				letterSpacing={"1px"}
-				// color={"orange"}
 				position={"relative"}
 			>
 				The Gaming Archives

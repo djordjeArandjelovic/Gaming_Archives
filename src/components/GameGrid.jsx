@@ -17,7 +17,7 @@ const GameGrid = ({ selectedGenre, searchText, toggleView }) => {
 				<SimpleGrid
 					columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
 					spacing={5}
-					padding={"10px"}
+					padding={"2%"}
 				>
 					{isLoading &&
 						skeletons.map((skeleton) => <CardSkeleton key={skeleton} />)}
@@ -31,7 +31,7 @@ const GameGrid = ({ selectedGenre, searchText, toggleView }) => {
 					padding={toggleView === false ? "1%" : "10%"}
 					gap={10}
 					margin={"auto"}
-					width={"85%"}
+					width={"55%"}
 				>
 					{isLoading &&
 						skeletons.map((skeleton) => <CardSkeleton key={skeleton} />)}

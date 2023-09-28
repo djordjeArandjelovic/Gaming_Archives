@@ -15,6 +15,8 @@ import {
 	useColorModeValue,
 	Image,
 	useToast,
+	Center,
+	useColorMode,
 } from "@chakra-ui/react";
 import { useState, useEffect, useRef } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -28,12 +30,14 @@ import {
 import saber from "../assets/saber.png";
 import { useAuth } from "../context/useAuth";
 import GoogleButton from "react-google-button";
+import { FcGoogle } from "react-icons/fc";
 
 // REGEX
 const PSW_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^.+\@.+\..+.{2,4}$/;
 
 const SignUp = () => {
+	const { colorMode } = useColorMode();
 	const navigate = useNavigate();
 	const toast = useToast();
 	const nameRef = useRef();
@@ -121,10 +125,10 @@ const SignUp = () => {
 	return (
 		<>
 			<Flex
+				bg={colorMode === "dark" ? "#151515" : ""}
 				minH={"100vh"}
 				align={"center"}
 				justify={"center"}
-				bg={useColorModeValue("gray.50", "gray.800")}
 			>
 				<Stack
 					className="signUpStack"
@@ -152,7 +156,7 @@ const SignUp = () => {
 					</Stack>
 					<Box
 						rounded={"lg"}
-						bg={useColorModeValue("white", "gray.700")}
+						bg={colorMode === "dark" ? "#151515" : ""}
 						boxShadow={"lg"}
 						p={8}
 					>
@@ -288,7 +292,18 @@ const SignUp = () => {
 										justifyContent={"center"}
 										alignItems={"center"}
 									>
-										<GoogleButton onClick={handleGoogle} />
+										{/* <GoogleButton onClick={handleGoogle} /> */}
+										<Button
+											w={"full"}
+											variant={"solid"}
+											leftIcon={<FcGoogle />}
+											colorScheme={"blue"}
+											onClick={handleGoogle}
+										>
+											<Center>
+												<Text>Sign in with Google</Text>
+											</Center>
+										</Button>
 									</Box>
 								</Stack>
 								<Stack>

@@ -18,6 +18,7 @@ import {
 	ModalHeader,
 	ModalOverlay,
 	VStack,
+	useColorMode,
 } from "@chakra-ui/react";
 import {
 	FaWindows,
@@ -34,7 +35,17 @@ import { Icon } from "@chakra-ui/react";
 import { FaRegHeart } from "react-icons/fa6";
 import { FaHeart } from "react-icons/fa6";
 import { useToast } from "@chakra-ui/react";
-import { addDoc, collection, doc } from "firebase/firestore";
+import {
+	addDoc,
+	collection,
+	deleteDoc,
+	doc,
+	getDoc,
+	getDocs,
+	query,
+	setDoc,
+	where,
+} from "firebase/firestore";
 import { db } from "../firebase";
 import { useAuth } from "../context/useAuth";
 
@@ -42,6 +53,7 @@ const GameCard = ({ game, toggleView }) => {
 	const { user } = useAuth();
 	const toast = useToast();
 	const [favourite, setFavourite] = useState(false);
+	const { colorMode, toggleColorMode } = useColorMode();
 
 	// SCREENSHOT GALLERY
 	const [isOpen, setIsOpen] = useState(false);
@@ -87,21 +99,53 @@ const GameCard = ({ game, toggleView }) => {
 
 	// DB;
 	const usersCollection = collection(db, "users");
+	const [isInWL, setisInWL] = useState(false);
+
+	useEffect(() => {
+		if (user !== null && game) {
+			const userUIDDoc = doc(usersCollection, user?.uid);
+			const userFavGames = collection(userUIDDoc, "favourites");
+			const favouritesQuery = query(userFavGames, where("id", "==", game?.id));
+
+			getDocs(favouritesQuery)
+				.then((querySnapshot) => {
+					setisInWL(!querySnapshot?.empty);
+				})
+				.catch((err) => {
+					console.log(err, "error from geting docs");
+				});
+		}
+	}, [game, user]);
 
 	const addGame = async (gameData) => {
+		console.log(gameData);
 		try {
 			const userUIDDoc = doc(usersCollection, user?.uid);
 			const userFavGames = collection(userUIDDoc, "favourites");
+			const userFavCol = doc(userFavGames, gameData?.id?.toString());
 
-			await addDoc(userFavGames, gameData);
-			toast({
-				title: "Success.",
-				description: `${game.name} added to your favourites.`,
-				status: "success",
-				duration: 2500,
-				isClosable: false,
-				position: "top-right",
-			});
+			const docSnap = await getDoc(userFavCol);
+
+			if (docSnap?.exists()) {
+				toast({
+					title: "Error.",
+					description: `Movie already in the list`,
+					status: "error",
+					duration: 2500,
+					position: "top",
+				});
+			} else {
+				await setDoc(userFavCol, gameData);
+				setisInWL(true);
+				toast({
+					title: "Success.",
+					description: `${game.name} added to your favourites.`,
+					status: "success",
+					duration: 2500,
+					isClosable: false,
+					position: "top-right",
+				});
+			}
 		} catch (error) {
 			console.log(error, "error from addGame");
 		}
@@ -126,11 +170,13 @@ const GameCard = ({ game, toggleView }) => {
 	return (
 		<>
 			<Card
+				bg={colorMode === "dark" ? "#202020" : ""}
+				width={{ sm: "100%", md: "90%", lg: "90%", xl: "80%" }}
 				borderRadius={"10px"}
 				overflow="hidden"
 				margin={{ sm: "auto", md: "auto", lg: "0", xl: "0" }}
 				_hover={{
-					boxShadow: "3px 6px 10px rgba(255, 0, 255, 0.5)",
+					boxShadow: "3px 6px 10px rgba(247, 178, 99, 0.5)",
 				}}
 			>
 				<Image
@@ -142,7 +188,7 @@ const GameCard = ({ game, toggleView }) => {
 				/>
 
 				<Button onClick={handleSave}>
-					<Icon as={favourite ? FaHeart : FaRegHeart} boxSize={"18px"} />
+					<Icon as={isInWL ? FaHeart : FaRegHeart} boxSize={"18px"} />
 				</Button>
 				<CardBody>
 					<HStack marginBottom={4} justifyContent="space-between">
@@ -201,7 +247,7 @@ const GameCard = ({ game, toggleView }) => {
 								))}
 								<Modal size={"4xl"} isOpen={isOpen} onClose={onClose}>
 									<ModalOverlay />
-									<ModalContent>
+									<ModalContent bg={colorMode === "dark" ? "#202020" : ""}>
 										<ModalHeader>{game?.name}</ModalHeader>
 										<ModalCloseButton />
 										<ModalBody>

@@ -19,12 +19,15 @@ import {
 	Stack,
 	Image,
 	useToast,
+	Center,
+	useColorMode,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { Link, useNavigate } from "react-router-dom";
 import saber from "../assets/saber.png";
 import { useAuth } from "../context/useAuth";
 import GoogleButton from "react-google-button";
+import { FcGoogle } from "react-icons/fc";
 
 const LoginDrawer = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -35,6 +38,7 @@ const LoginDrawer = () => {
 	const { googleSignIn, login, user, logout } = useAuth();
 	const toast = useToast();
 	const navigate = useNavigate();
+	const { colorMode } = useColorMode();
 
 	// DB
 
@@ -90,7 +94,7 @@ const LoginDrawer = () => {
 	if (user) {
 		return (
 			<Button
-				colorScheme={"green"}
+				// colorScheme={"green"}
 				onClick={logout}
 				fontFamily={"StarWars"}
 				fontWeight={"light"}
@@ -103,17 +107,19 @@ const LoginDrawer = () => {
 	return (
 		<>
 			<Button
-				colorScheme="green"
+				// colorScheme="green"
+				// bg={"#4C565D"}
 				onClick={onOpen}
 				fontFamily={"StarWars"}
 				fontWeight={"light"}
+				letterSpacing={"1px"}
 			>
 				Login
 			</Button>
 
 			<Drawer isOpen={isOpen} placement="right" onClose={onClose} size={"sm"}>
 				<DrawerOverlay />
-				<DrawerContent>
+				<DrawerContent bg={colorMode === "dark" ? "#151515" : ""}>
 					<DrawerCloseButton />
 					<DrawerHeader
 						textAlign={"center"}
@@ -199,7 +205,17 @@ const LoginDrawer = () => {
 										justifyContent={"center"}
 										alignItems={"center"}
 									>
-										<GoogleButton onClick={handleGoogle} />
+										<Button
+											w={"full"}
+											variant={"solid"}
+											leftIcon={<FcGoogle />}
+											colorScheme={"blue"}
+											onClick={handleGoogle}
+										>
+											<Center>
+												<Text>Sign in with Google</Text>
+											</Center>
+										</Button>
 									</Box>
 								</Stack>
 							</form>
