@@ -1,9 +1,18 @@
 import React from "react";
-import { Box, Button, Menu, MenuButton, MenuList } from "@chakra-ui/react";
+import {
+	Box,
+	Button,
+	Menu,
+	MenuButton,
+	MenuItem,
+	MenuList,
+	useColorMode,
+} from "@chakra-ui/react";
 import Genres from "./Genres";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 
 const GenreMenu = ({ onSelectGenre, selectedGenre }) => {
+	const { colorMode } = useColorMode();
 	return (
 		<Box marginLeft={3}>
 			<Menu>
@@ -16,7 +25,7 @@ const GenreMenu = ({ onSelectGenre, selectedGenre }) => {
 				>
 					Genres
 				</MenuButton>
-				<MenuList>
+				<MenuList bg={colorMode === "dark" ? "#151515" : ""}>
 					<Genres selectedGenre={selectedGenre} onSelectGenre={onSelectGenre} />
 				</MenuList>
 			</Menu>

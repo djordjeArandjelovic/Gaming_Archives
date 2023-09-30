@@ -6,23 +6,36 @@ import {
 	Image,
 	List,
 	ListItem,
+	Show,
 	Spinner,
 	Text,
+	useColorMode,
 } from "@chakra-ui/react";
 
-import logo from "../assets/logo.svg";
 import useData from "../hooks/useData";
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import { useAuth } from "../context/useAuth";
 import { collection, getDocs, query } from "firebase/firestore";
 import { db } from "../firebase";
 import { Link } from "react-router-dom";
+import WishListOverview from "./WishListOverview";
+import PlatformSelector from "./PlatformSelector";
+import usePlatforms from "../hooks/usePlatforms";
 
-const Genres = ({ onSelectGenre, selectedGenre, wishList, setWishList }) => {
+const Genres = ({
+	onSelectGenre,
+	selectedGenre,
+	wishList,
+	setWishList,
+	selectedPlatform,
+	onSelectPlatform,
+}) => {
 	const { data, isLoading, error } = useData("/genres");
+	const { data: platformData, error: platformError } = usePlatforms();
 	const [refresh, setRefresh] = useState(true);
 	const [displayCount, setDisplayCount] = useState(3);
 	const { user } = useAuth();
+	const { colorMode } = useColorMode();
 
 	const croppedUrl = (url) => {
 		const index = url?.indexOf("media/") + "media/".length;
@@ -70,7 +83,7 @@ const Genres = ({ onSelectGenre, selectedGenre, wishList, setWishList }) => {
 	return (
 		<>
 			<Heading
-				color={refresh === true ? "#F7B263" : ""}
+				color={refresh === true && colorMode === "dark" ? "#F7B263" : ""}
 				fontSize={"2xl"}
 				paddingX={"10px"}
 				mt={2}
@@ -80,8 +93,42 @@ const Genres = ({ onSelectGenre, selectedGenre, wishList, setWishList }) => {
 					Home
 				</Link>
 			</Heading>
+
+			<Show above="lg">
+				<WishListOverview wishList={wishList} />
+			</Show>
+			{/* <Show above="lg">
+				<List paddingX={"10px"} mt={10} width={"200px"}>
+					<Heading
+						color={colorMode === "dark" ? "#F7B263" : ""}
+						mb={2}
+						fontSize={"xl"}
+					>
+						Platforms
+					</Heading>
+					{platformData.map((platform) => (
+						<ListItem key={platform?.id} paddingY={"5px"}>
+							<Button
+								variant={"link"}
+								value={platform?.name}
+								fontWeight={
+									platform?.id === selectedPlatform?.id ? "bold" : "normal"
+								}
+								color={platform?.id === selectedPlatform?.id ? "#F7B263" : ""}
+								onClick={() => onSelectPlatform(platform)}
+							>
+								{platform?.name}
+							</Button>
+						</ListItem>
+					))}
+				</List>
+			</Show> */}
 			<List paddingX={"10px"} mt={10} width={"200px"}>
-				<Heading mb={2} fontSize={"xl"}>
+				<Heading
+					color={colorMode === "dark" ? "#F7B263" : ""}
+					mb={2}
+					fontSize={"xl"}
+				>
 					Genres
 				</Heading>
 				{data.slice(0, displayCount).map((genre) => (
@@ -129,14 +176,6 @@ const Genres = ({ onSelectGenre, selectedGenre, wishList, setWishList }) => {
 						</HStack>
 					</ListItem>
 				)}
-			</List>
-			<List paddingX={"10px"} mt={10} width={"200px"}>
-				<Heading fontSize={"xl"} mb={2} mt={2}>
-					Currently in WishList:
-				</Heading>
-				{wishList?.map((game) => (
-					<ListItem key={game?.id}>{game?.name}</ListItem>
-				))}
 			</List>
 		</>
 	);

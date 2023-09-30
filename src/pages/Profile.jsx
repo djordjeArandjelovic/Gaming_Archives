@@ -48,39 +48,25 @@ const Profile = ({ wishList, setWishList }) => {
 	const { colorMode } = useColorMode();
 	const toast = useToast();
 
-	const [newUser, setNewUser] = useState({
-		email: user?.email || "",
-		firstName: "",
-		lastName: "",
-	});
+	// useEffect(() => {
+	// 	if (!user) {
+	// 		return;
+	// 	}
+	// 	const userFavGames = collection(db, "users", user?.uid, "favourites");
+	// 	const favQuery = query(userFavGames);
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		console.log(user.uid);
-
-		await addDoc(collection(db, user.uid), newUser);
-		setReFetch(!reFetch);
-	};
-
-	useEffect(() => {
-		if (!user) {
-			return;
-		}
-		const userFavGames = collection(db, "users", user?.uid, "favourites");
-		const favQuery = query(userFavGames);
-
-		getDocs(favQuery)
-			.then((querySnapshot) => {
-				const games = [];
-				querySnapshot.forEach((doc) => {
-					games.push(doc?.data());
-				});
-				setWishList(games);
-			})
-			.catch((err) =>
-				console.log("error from useEffect Profile (querySnapshot)", err)
-			);
-	}, [user, wishList]);
+	// 	getDocs(favQuery)
+	// 		.then((querySnapshot) => {
+	// 			const games = [];
+	// 			querySnapshot.forEach((doc) => {
+	// 				games.push(doc?.data());
+	// 			});
+	// 			setWishList(games);
+	// 		})
+	// 		.catch((err) =>
+	// 			console.log("error from useEffect Profile (querySnapshot)", err)
+	// 		);
+	// }, [user, wishList]);
 
 	const removeGame = async (id) => {
 		try {
@@ -166,8 +152,8 @@ const Profile = ({ wishList, setWishList }) => {
 							>
 								Edit Profile
 							</Button>
-							<Text fontSize={"lg"}>First Name:{newUser?.firstName}</Text>
-							<Text fontSize={"lg"}>Last Name:{newUser?.lastName}</Text>
+							{/* <Text fontSize={"lg"}>First Name:{newUser?.firstName}</Text>
+							<Text fontSize={"lg"}>Last Name:{newUser?.lastName}</Text> */}
 							<Text fontSize={"lg"}> email: {user?.email} </Text>
 							<Heading>Wishlist</Heading>
 							<List>
@@ -228,7 +214,7 @@ const Profile = ({ wishList, setWishList }) => {
 					</Box>
 				</Flex>
 
-				<Modal size={"xl"} isOpen={isOpen} onClose={onClose}>
+				{/* <Modal size={"xl"} isOpen={isOpen} onClose={onClose}>
 					<ModalOverlay />
 					<ModalContent bg={colorMode === "dark" ? "#151515" : ""}>
 						<ModalHeader textAlign={"center"}>Edit Profile</ModalHeader>
@@ -266,19 +252,8 @@ const Profile = ({ wishList, setWishList }) => {
 								</Flex>
 							</form>
 						</ModalBody>
-
-						{/* <ModalFooter>
-						<Button
-							colorScheme="red"
-							mr={3}
-							// onClick={handleDelete}
-							margin={"auto"}
-						>
-							Delete
-						</Button>
-					</ModalFooter> */}
 					</ModalContent>
-				</Modal>
+				</Modal> */}
 			</Box>
 		</>
 	);

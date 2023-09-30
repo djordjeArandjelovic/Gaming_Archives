@@ -6,12 +6,15 @@ import GameGrid from "../components/GameGrid";
 import GenreMenu from "../components/GenreMenu";
 import ToggleView from "../components/ToggleView";
 import MoreDetails from "../components/MoreDetails";
+import PlatformSelector from "../components/PlatformSelector";
 
 const Main = ({ wishList, setWishList }) => {
 	const [selectedGenre, setSelectedGenre] = useState(null);
 	const [searchText, setSearchText] = useState("");
+	const [selectedPlatform, setSelectedPlatform] = useState(null);
 	const [toggleView, setToggleView] = useState(true);
 	const { colorMode } = useColorMode();
+
 	// console.log(searchText);
 	return (
 		<Grid
@@ -38,6 +41,8 @@ const Main = ({ wishList, setWishList }) => {
 						setWishList={setWishList}
 						selectedGenre={selectedGenre}
 						onSelectGenre={(genre) => setSelectedGenre(genre)}
+						onSelectPlatform={(platform) => setSelectedPlatform(platform)}
+						selectedPlatform={selectedPlatform}
 					/>
 				</GridItem>
 			</Show>
@@ -45,9 +50,20 @@ const Main = ({ wishList, setWishList }) => {
 			{/* MAIN-GRID */}
 			<GridItem area={"main"}>
 				{/* ABOVE CARDS */}
-				<Flex>
+				{/* TODO: FIX SMALLEST SCREEN FLEX */}
+				<Flex ml={4} align={"center"}>
 					<Show above="md">
 						<ToggleView toggleView={toggleView} setToggleView={setToggleView} />
+					</Show>
+					<PlatformSelector
+						onSelectPlatform={(platform) => setSelectedPlatform(platform)}
+						selectedPlatform={selectedPlatform}
+					/>
+					<Show breakpoint="(max-width: 991px)">
+						<GenreMenu
+							selectedGenre={selectedGenre}
+							onSelectGenre={(genre) => setSelectedGenre(genre)}
+						/>
 					</Show>
 					<Show breakpoint="(max-width: 767px)">
 						<MoreDetails
@@ -55,15 +71,10 @@ const Main = ({ wishList, setWishList }) => {
 							setToggleView={setToggleView}
 						/>
 					</Show>
-					<Show breakpoint="(max-width: 991px)">
-						<GenreMenu
-							selectedGenre={selectedGenre}
-							onSelectGenre={(genre) => setSelectedGenre(genre)}
-						/>
-					</Show>
 				</Flex>
 				{/* CARDS */}
 				<GameGrid
+					selectedPlatform={selectedPlatform}
 					searchText={searchText}
 					selectedGenre={selectedGenre}
 					onSelectGenre={(genre) => setSelectedGenre(genre)}

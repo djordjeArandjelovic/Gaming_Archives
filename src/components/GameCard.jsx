@@ -101,21 +101,21 @@ const GameCard = ({ game, toggleView }) => {
 	const usersCollection = collection(db, "users");
 	const [isInWL, setisInWL] = useState(false);
 
-	useEffect(() => {
-		if (user !== null && game) {
-			const userUIDDoc = doc(usersCollection, user?.uid);
-			const userFavGames = collection(userUIDDoc, "favourites");
-			const favouritesQuery = query(userFavGames, where("id", "==", game?.id));
+	// useEffect(() => {
+	// 	if (user !== null && game) {
+	// 		const userUIDDoc = doc(usersCollection, user?.uid);
+	// 		const userFavGames = collection(userUIDDoc, "favourites");
+	// 		const favouritesQuery = query(userFavGames, where("id", "==", game?.id));
 
-			getDocs(favouritesQuery)
-				.then((querySnapshot) => {
-					setisInWL(!querySnapshot?.empty);
-				})
-				.catch((err) => {
-					console.log(err, "error from geting docs");
-				});
-		}
-	}, [game, user]);
+	// 		getDocs(favouritesQuery)
+	// 			.then((querySnapshot) => {
+	// 				setisInWL(!querySnapshot?.empty);
+	// 			})
+	// 			.catch((err) => {
+	// 				console.log(err, "error from geting docs");
+	// 			});
+	// 	}
+	// }, [game, user]);
 
 	const addGame = async (gameData) => {
 		console.log(gameData);
