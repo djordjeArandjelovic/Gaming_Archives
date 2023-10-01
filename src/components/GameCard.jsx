@@ -32,8 +32,8 @@ import { MdPhoneIphone } from "react-icons/md";
 import { SiNintendo } from "react-icons/si";
 import { BsGlobe } from "react-icons/bs";
 import { Icon } from "@chakra-ui/react";
-import { FaRegHeart } from "react-icons/fa6";
-import { FaHeart } from "react-icons/fa6";
+import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 import { useToast } from "@chakra-ui/react";
 import {
 	addDoc,
@@ -100,27 +100,48 @@ const GameCard = ({ game, toggleView }) => {
 	// DB;
 	const usersCollection = collection(db, "users");
 	const [isInWL, setisInWL] = useState(false);
+	const [isInWLQueryResult, setIsInWLQueryResult] = useState(false);
 
-	// useEffect(() => {
-	// 	if (user !== null && game) {
-	// 		const userUIDDoc = doc(usersCollection, user?.uid);
-	// 		const userFavGames = collection(userUIDDoc, "favourites");
-	// 		const favouritesQuery = query(userFavGames, where("id", "==", game?.id));
+	useEffect(() => {
+		if (user !== null && game) {
+			const userUIDDoc = doc(usersCollection, user?.uid || "");
+			const userFavGames = collection(userUIDDoc, "favourites");
+			const favouritesQuery = query(userFavGames, where("id", "==", game?.id));
 
-	// 		getDocs(favouritesQuery)
-	// 			.then((querySnapshot) => {
-	// 				setisInWL(!querySnapshot?.empty);
-	// 			})
-	// 			.catch((err) => {
-	// 				console.log(err, "error from geting docs");
-	// 			});
-	// 	}
-	// }, [game, user]);
+			getDocs(favouritesQuery)
+				.then((querySnapshot) => {
+					setisInWL(!querySnapshot?.empty);
+				})
+				.catch((err) => {
+					console.log(err, "error from geting docs");
+				});
+		}
+	}, [game, user]);
+
+	useEffect(() => {
+		if (user !== null && game) {
+			const userUIDDoc = doc(usersCollection, user?.uid);
+			const userFavGames = collection(userUIDDoc, "favourites");
+			const favouritesQuery = query(userFavGames, where("id", "==", game?.id));
+
+			getDocs(favouritesQuery)
+				.then((querySnapshot) => {
+					setIsInWLQueryResult(!querySnapshot?.empty);
+				})
+				.catch((err) => {
+					console.log(err, "error from geting docs");
+				});
+		}
+	}, [game, user]);
+
+	useEffect(() => {
+		setisInWL(isInWLQueryResult);
+	}, [isInWLQueryResult]);
 
 	const addGame = async (gameData) => {
 		console.log(gameData);
 		try {
-			const userUIDDoc = doc(usersCollection, user?.uid);
+			const userUIDDoc = doc(usersCollection, user?.uid || "");
 			const userFavGames = collection(userUIDDoc, "favourites");
 			const userFavCol = doc(userFavGames, gameData?.id?.toString());
 
@@ -129,10 +150,11 @@ const GameCard = ({ game, toggleView }) => {
 			if (docSnap?.exists()) {
 				toast({
 					title: "Error.",
-					description: `Movie already in the list`,
+					description: `Game already in the list`,
 					status: "error",
 					duration: 2500,
 					position: "top",
+					isClosable: true,
 				});
 			} else {
 				await setDoc(userFavCol, gameData);
@@ -142,7 +164,7 @@ const GameCard = ({ game, toggleView }) => {
 					description: `${game.name} added to your favourites.`,
 					status: "success",
 					duration: 2500,
-					isClosable: false,
+					isClosable: true,
 					position: "top-right",
 				});
 			}
@@ -165,6 +187,20 @@ const GameCard = ({ game, toggleView }) => {
 		} else {
 			addGame(game);
 		}
+		// if (!user) {
+		// 	toast({
+		// 		title: "Error.",
+		// 		description: "Please log in.",
+		// 		status: "error",
+		// 		duration: 2500,
+		// 		isClosable: false,
+		// 		position: "top",
+		// 	});
+		// 	setFavourite(true);
+		// } else {
+		// 	// Pass game, user, usersCollection, setisInWL, and toast to the addGame function
+		// 	addGame(game, user, usersCollection, setisInWL, toast);
+		// }
 	};
 
 	return (
@@ -182,8 +218,8 @@ const GameCard = ({ game, toggleView }) => {
 				<Image
 					src={
 						toggleView === false
-							? game?.background_image
-							: croppedUrl(game?.background_image)
+							? game?.background_image || ""
+							: croppedUrl(game?.background_image || "")
 					}
 				/>
 

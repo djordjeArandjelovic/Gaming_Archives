@@ -15,7 +15,6 @@ const Main = ({ wishList, setWishList }) => {
 	const [toggleView, setToggleView] = useState(true);
 	const { colorMode } = useColorMode();
 
-	// console.log(searchText);
 	return (
 		<Grid
 			bg={colorMode === "dark" ? "#151515" : ""}
@@ -55,10 +54,10 @@ const Main = ({ wishList, setWishList }) => {
 					<Show above="md">
 						<ToggleView toggleView={toggleView} setToggleView={setToggleView} />
 					</Show>
-					<PlatformSelector
+					{/* <PlatformSelector
 						onSelectPlatform={(platform) => setSelectedPlatform(platform)}
 						selectedPlatform={selectedPlatform}
-					/>
+					/> */}
 					<Show breakpoint="(max-width: 991px)">
 						<GenreMenu
 							selectedGenre={selectedGenre}

@@ -22,16 +22,8 @@ import WishListOverview from "./WishListOverview";
 import PlatformSelector from "./PlatformSelector";
 import usePlatforms from "../hooks/usePlatforms";
 
-const Genres = ({
-	onSelectGenre,
-	selectedGenre,
-	wishList,
-	setWishList,
-	selectedPlatform,
-	onSelectPlatform,
-}) => {
+const Genres = ({ onSelectGenre, selectedGenre, wishList, setWishList }) => {
 	const { data, isLoading, error } = useData("/genres");
-	const { data: platformData, error: platformError } = usePlatforms();
 	const [refresh, setRefresh] = useState(true);
 	const [displayCount, setDisplayCount] = useState(3);
 	const { user } = useAuth();

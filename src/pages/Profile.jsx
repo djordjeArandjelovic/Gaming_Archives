@@ -48,25 +48,25 @@ const Profile = ({ wishList, setWishList }) => {
 	const { colorMode } = useColorMode();
 	const toast = useToast();
 
-	// useEffect(() => {
-	// 	if (!user) {
-	// 		return;
-	// 	}
-	// 	const userFavGames = collection(db, "users", user?.uid, "favourites");
-	// 	const favQuery = query(userFavGames);
+	useEffect(() => {
+		if (!user) {
+			return;
+		}
+		const userFavGames = collection(db, "users", user?.uid, "favourites");
+		const favQuery = query(userFavGames);
 
-	// 	getDocs(favQuery)
-	// 		.then((querySnapshot) => {
-	// 			const games = [];
-	// 			querySnapshot.forEach((doc) => {
-	// 				games.push(doc?.data());
-	// 			});
-	// 			setWishList(games);
-	// 		})
-	// 		.catch((err) =>
-	// 			console.log("error from useEffect Profile (querySnapshot)", err)
-	// 		);
-	// }, [user, wishList]);
+		getDocs(favQuery)
+			.then((querySnapshot) => {
+				const games = [];
+				querySnapshot.forEach((doc) => {
+					games.push(doc?.data());
+				});
+				setWishList(games);
+			})
+			.catch((err) =>
+				console.log("error from useEffect Profile (querySnapshot)", err)
+			);
+	}, [user, wishList]);
 
 	const removeGame = async (id) => {
 		try {
