@@ -60,18 +60,18 @@ const Main = ({ wishList, setWishList }) => {
 						onSelectPlatform={(platform) => setSelectedPlatform(platform)}
 						selectedPlatform={selectedPlatform}
 					/> */}
-					<Show breakpoint="(max-width: 991px)">
+					{/* <Show breakpoint="(max-width: 991px)">
 						<GenreMenu
 							selectedGenre={selectedGenre}
 							onSelectGenre={(genre) => setSelectedGenre(genre)}
 						/>
-					</Show>
-					<Show breakpoint="(max-width: 767px)">
+					</Show> */}
+					{/* <Show breakpoint="(max-width: 767px)">
 						<MoreDetails
 							toggleView={toggleView}
 							setToggleView={setToggleView}
 						/>
-					</Show>
+					</Show> */}
 				</Flex>
 				{/* CARDS */}
 				<GameGrid

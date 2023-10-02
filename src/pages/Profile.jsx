@@ -39,6 +39,7 @@ import {
 import { db } from "../firebase";
 import { useEffect } from "react";
 import GameCard from "../components/GameCard";
+import { useNavigate } from "react-router-dom";
 
 const Profile = ({ wishList, setWishList }) => {
 	const { user } = useAuth();
@@ -46,6 +47,7 @@ const Profile = ({ wishList, setWishList }) => {
 	const { onOpen } = useDisclosure();
 	const { colorMode } = useColorMode();
 	const toast = useToast();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (!user) {
@@ -69,6 +71,7 @@ const Profile = ({ wishList, setWishList }) => {
 	}, [user]);
 
 	const removeGame = async (id) => {
+		console.log("test");
 		try {
 			if (!user) {
 				return;
@@ -86,7 +89,7 @@ const Profile = ({ wishList, setWishList }) => {
 				});
 				const filteredWL = wishList.filter((game) => game.id !== id);
 				setWishList(filteredWL);
-				// navigate(0);
+				navigate(0);
 			}
 		} catch (error) {
 			console.log("error from removeGame()", error);
@@ -98,7 +101,7 @@ const Profile = ({ wishList, setWishList }) => {
 			<>
 				<NavBar />
 				<Flex
-					// height={"86vh"}
+					height={"86vh"}
 					bg={colorMode === "dark" ? "#151515" : ""}
 					justify={"center"}
 				>
@@ -119,13 +122,13 @@ const Profile = ({ wishList, setWishList }) => {
 
 	return (
 		<>
-			<Box height={"100vh"} width={"100%"}>
+			<Box width={"100%"}>
 				<NavBar />
 				<Flex
 					bg={colorMode === "dark" ? "#151515" : ""}
+					height={"100%"}
 					px={5}
 					gap={2}
-					// justify={"space-between"}
 					flexDirection={{
 						base: "column",
 						md: "column",
@@ -142,18 +145,7 @@ const Profile = ({ wishList, setWishList }) => {
 							>
 								user Profile:
 							</Heading>
-							{/* <Button
-								size={"sm"}
-								width={"40%"}
-								colorScheme={"orange"}
-								fontSize={"md"}
-								fontWeight={"bold"}
-								onClick={onOpen}
-							>
-								Edit Profile
-							</Button>
-							<Text fontSize={"lg"}>First Name:{newUser?.firstName}</Text>
-							<Text fontSize={"lg"}>Last Name:{newUser?.lastName}</Text> */}
+
 							<Text fontSize={"lg"}> {user?.email} </Text>
 							<Heading>Wishlist</Heading>
 							<List>
@@ -213,47 +205,6 @@ const Profile = ({ wishList, setWishList }) => {
 						</SimpleGrid>
 					</Box>
 				</Flex>
-
-				{/* <Modal size={"xl"} isOpen={isOpen} onClose={onClose}>
-					<ModalOverlay />
-					<ModalContent bg={colorMode === "dark" ? "#151515" : ""}>
-						<ModalHeader textAlign={"center"}>Edit Profile</ModalHeader>
-						<ModalCloseButton />
-						<ModalBody>
-							<form onSubmit={handleSubmit}>
-								<Flex direction={"column"} gap={2} mt={8}>
-									<FormControl id="firstName">
-										<FormLabel>First Name</FormLabel>
-										<Input
-											value={newUser.firstName}
-											onChange={(e) =>
-												setNewUser({ ...newUser, firstName: e.target.value })
-											}
-											type={"text"}
-											placeholder="First Name"
-										/>
-									</FormControl>
-									<FormControl id="lastName">
-										<FormLabel>Last Name</FormLabel>
-										<Input
-											value={newUser.lastName}
-											onChange={(e) =>
-												setNewUser({ ...newUser, lastName: e.target.value })
-											}
-											type={"text"}
-											placeholder="Last Name"
-										/>
-									</FormControl>
-								</Flex>
-								<Flex justify={"center"} align={"center"}>
-									<Button type="submit" size={"sm"} mt={4} display={"block"}>
-										Save Changes
-									</Button>
-								</Flex>
-							</form>
-						</ModalBody>
-					</ModalContent>
-				</Modal> */}
 			</Box>
 		</>
 	);

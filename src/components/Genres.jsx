@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
+	Box,
 	Button,
+	Flex,
 	Heading,
 	HStack,
 	Image,
 	List,
 	ListItem,
-	Show,
 	Spinner,
 	Text,
 	useColorMode,
@@ -19,8 +20,7 @@ import { collection, getDocs, query } from "firebase/firestore";
 import { db } from "../firebase";
 import { Link } from "react-router-dom";
 import WishListOverview from "./WishListOverview";
-import PlatformSelector from "./PlatformSelector";
-import usePlatforms from "../hooks/usePlatforms";
+import NavBarProfile from "./NavBarProfile";
 
 const Genres = ({ onSelectGenre, selectedGenre, wishList, setWishList }) => {
 	const { data, isLoading, error } = useData("/genres");
@@ -66,7 +66,7 @@ const Genres = ({ onSelectGenre, selectedGenre, wishList, setWishList }) => {
 				setWishList(games);
 			})
 			.catch((err) =>
-				console.log("error from useEffect Profile (querySnapshot)", err)
+				console.log("error from useEffect Genres (querySnapshot)", err)
 			);
 	}, [user]);
 
@@ -75,11 +75,21 @@ const Genres = ({ onSelectGenre, selectedGenre, wishList, setWishList }) => {
 
 	return (
 		<>
+			<Flex
+				flexDirection={"column"}
+				mt={{
+					base: 5,
+					md: "30%",
+				}}
+				ml={2}
+			>
+				<NavBarProfile />
+			</Flex>
 			<Heading
 				color={refresh === true && colorMode === "dark" ? "#F7B263" : ""}
-				fontSize={"2xl"}
+				fontSize={"xl"}
 				paddingX={"10px"}
-				mt={2}
+				mt={"10%"}
 				width={"200px"}
 			>
 				<Link onClick={handleRefresh} to={"/"}>
@@ -87,36 +97,9 @@ const Genres = ({ onSelectGenre, selectedGenre, wishList, setWishList }) => {
 				</Link>
 			</Heading>
 
-			<Show above="lg">
-				<WishListOverview wishList={wishList} />
-			</Show>
-			{/* <Show above="lg">
-				<List paddingX={"10px"} mt={10} width={"200px"}>
-					<Heading
-						color={colorMode === "dark" ? "#F7B263" : ""}
-						mb={2}
-						fontSize={"xl"}
-					>
-						Platforms
-					</Heading>
-					{platformData.map((platform) => (
-						<ListItem key={platform?.id} paddingY={"5px"}>
-							<Button
-								variant={"link"}
-								value={platform?.name}
-								fontWeight={
-									platform?.id === selectedPlatform?.id ? "bold" : "normal"
-								}
-								color={platform?.id === selectedPlatform?.id ? "#F7B263" : ""}
-								onClick={() => onSelectPlatform(platform)}
-							>
-								{platform?.name}
-							</Button>
-						</ListItem>
-					))}
-				</List>
-			</Show> */}
-			<List paddingX={"10px"} mt={10} width={"200px"}>
+			<WishListOverview wishList={wishList} />
+
+			<List paddingX={"10px"} mt={5} width={"200px"}>
 				<Heading
 					color={colorMode === "dark" ? "#F7B263" : ""}
 					mb={2}
@@ -170,6 +153,32 @@ const Genres = ({ onSelectGenre, selectedGenre, wishList, setWishList }) => {
 					</ListItem>
 				)}
 			</List>
+			{/* <Show above="lg">
+				<List paddingX={"10px"} mt={10} width={"200px"}>
+					<Heading
+						color={colorMode === "dark" ? "#F7B263" : ""}
+						mb={2}
+						fontSize={"xl"}
+					>
+						Platforms
+					</Heading>
+					{platformData.map((platform) => (
+						<ListItem key={platform?.id} paddingY={"5px"}>
+							<Button
+								variant={"link"}
+								value={platform?.name}
+								fontWeight={
+									platform?.id === selectedPlatform?.id ? "bold" : "normal"
+								}
+								color={platform?.id === selectedPlatform?.id ? "#F7B263" : ""}
+								onClick={() => onSelectPlatform(platform)}
+							>
+								{platform?.name}
+							</Button>
+						</ListItem>
+					))}
+				</List>
+			</Show> */}
 		</>
 	);
 };

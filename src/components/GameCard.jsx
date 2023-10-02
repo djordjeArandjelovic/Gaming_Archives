@@ -46,11 +46,13 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { useAuth } from "../context/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const GameCard = ({ game, toggleView }) => {
 	const { user, uid } = useAuth();
 	const toast = useToast();
 	const { colorMode } = useColorMode();
+	const navigate = useNavigate();
 
 	// SCREENSHOT GALLERY
 	const [isOpen, setIsOpen] = useState(false);
@@ -137,7 +139,6 @@ const GameCard = ({ game, toggleView }) => {
 	}, [isInWLQueryResult]);
 
 	const addGame = async (gameData) => {
-		console.log(gameData);
 		try {
 			if (user === null) {
 				throw new Error("No user found");
@@ -161,6 +162,7 @@ const GameCard = ({ game, toggleView }) => {
 			} else {
 				await setDoc(userFavCol, gameData);
 				setisInWL(true);
+				navigate(0);
 				toast({
 					title: "Success.",
 					description: `${game.name} added to your favourites.`,
@@ -210,17 +212,12 @@ const GameCard = ({ game, toggleView }) => {
 					}
 				/>
 
-				<Button>
-					<Icon
-						as={isInWL ? FaHeart : FaRegHeart}
-						onClick={handleSave}
-						boxSize={"18px"}
-					/>
+				<Button onClick={handleSave}>
+					<Icon as={isInWL ? FaHeart : FaRegHeart} boxSize={"18px"} />
 				</Button>
 				<CardBody>
 					<HStack marginBottom={4} justifyContent="space-between">
 						<HStack>
-							{toggleView === false ? <Text>Platforms:</Text> : null}
 							{game?.parent_platforms?.map((platform) => (
 								<Icon
 									key={platform?.platform.id}

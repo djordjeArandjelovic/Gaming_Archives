@@ -6,7 +6,7 @@ import {
 	MenuList,
 	useColorMode,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React from "react";
 import { BsChevronDown } from "react-icons/bs";
 import usePlatforms from "../hooks/usePlatforms";
 
@@ -14,12 +14,10 @@ const PlatformSelector = ({ onSelectPlatform, selectedPlatform }) => {
 	const { colorMode } = useColorMode();
 	const { data, error } = usePlatforms();
 
-	console.log(selectedPlatform);
-
 	if (error) return null;
 
 	return (
-		<Menu>
+		<Menu isLazy>
 			<MenuButton
 				fontFamily={"StarWars"}
 				fontWeight={"light"}
@@ -36,15 +34,20 @@ const PlatformSelector = ({ onSelectPlatform, selectedPlatform }) => {
 				>
 					All
 				</MenuItem>
-				{data.map((platform) => (
-					<MenuItem
-						onClick={() => onSelectPlatform(platform)}
-						bg={colorMode === "dark" ? "#151515" : ""}
-						key={platform.id}
-					>
-						{platform.name}
-					</MenuItem>
-				))}
+				{data.map((platform, index) =>
+					index === 1 ? null : (
+						<MenuItem
+							onClick={() => onSelectPlatform(platform)}
+							bg={colorMode === "dark" ? "#151515" : ""}
+							_hover={{
+								bg: "#282828",
+							}}
+							key={platform.id}
+						>
+							{platform.name}
+						</MenuItem>
+					)
+				)}
 			</MenuList>
 		</Menu>
 	);

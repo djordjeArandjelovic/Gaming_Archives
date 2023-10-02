@@ -1,6 +1,16 @@
-import { Heading, List, ListItem, Text, useColorMode } from "@chakra-ui/react";
+import {
+	Heading,
+	List,
+	ListIcon,
+	ListItem,
+	OrderedList,
+	Text,
+	UnorderedList,
+	useColorMode,
+} from "@chakra-ui/react";
 import React from "react";
 import { useAuth } from "../context/useAuth";
+import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 const WishListOverview = ({ wishList }) => {
 	const { user } = useAuth();
@@ -31,7 +41,10 @@ const WishListOverview = ({ wishList }) => {
 				Currently in WishList:
 			</Heading>
 			{wishList?.map((game) => (
-				<ListItem key={game?.id}>{game?.name}</ListItem>
+				<ListItem key={game?.id}>
+					<ListIcon as={InfoOutlineIcon} color="#F7B263" />
+					{game?.name}
+				</ListItem>
 			))}
 		</List>
 	);
