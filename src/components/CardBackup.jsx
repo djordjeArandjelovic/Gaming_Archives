@@ -100,8 +100,7 @@ const GameCard = ({ game, toggleView }) => {
 
 	// useEffect(() => {
 	// 	if (user !== null && game) {
-	// 		const gamesRef = collection(db, "users");
-	// 		const userUIDDoc = doc(gamesRef, user?.uid || "");
+	// 		const userUIDDoc = doc(usersCollection, user?.uid || "");
 	// 		const userFavGames = collection(userUIDDoc, "favourites");
 	// 		const favouritesQuery = query(userFavGames, where("id", "==", game?.id));
 
@@ -113,82 +112,85 @@ const GameCard = ({ game, toggleView }) => {
 	// 				console.log(err, "error from geting docs");
 	// 			});
 	// 	}
+	// }, [game, user]);
+
+	// useEffect(() => {
+	// 	if (user !== null && game) {
+	// 		console.log("test");
+	// 		const gamesRef = collection(db, "users");
+	// 		const userUIDDoc = doc(gamesRef, uid);
+	// 		const userFavGames = collection(userUIDDoc, "favourites");
+	// 		const favouritesQuery = query(userFavGames, where("id", "==", game?.id));
+
+	// 		getDocs(favouritesQuery)
+	// 			.then((querySnapshot) => {
+	// 				setIsInWLQueryResult(!querySnapshot?.empty);
+	// 			})
+	// 			.catch((err) => {
+	// 				console.log(err, "error from geting docs");
+	// 			});
+	// 	}
 	// }, [game, uid]);
 
-	useEffect(() => {
-		if (user !== null && game) {
-			const gamesRef = collection(db, "users");
-			const userUIDDoc = doc(gamesRef, uid);
-			const userFavGames = collection(userUIDDoc, "favourites");
-			const favouritesQuery = query(userFavGames, where("id", "==", game?.id));
+	// useEffect(() => {
+	// 	setisInWL(isInWLQueryResult);
+	// }, [isInWLQueryResult]);
 
-			getDocs(favouritesQuery)
-				.then((querySnapshot) => {
-					setIsInWLQueryResult(!querySnapshot?.empty);
-				})
-				.catch((err) => {
-					console.log(err, "error from geting docs");
-				});
-		}
-	}, [game, uid]);
+	// const addGame = async (gameData) => {
+	// 	console.log(gameData);
+	// 	try {
+	// 		if (user === null) {
+	// 			throw new Error("No user found");
+	// 		}
+	// 		const gamesRef = collection(db, "users");
+	// 		const userUIDDoc = doc(gamesRef, user?.uid);
+	// 		const userFavGames = collection(userUIDDoc, "favourites");
+	// 		const userFavCol = doc(userFavGames, gameData?.id?.toString());
 
-	useEffect(() => {
-		setisInWL(isInWLQueryResult);
-	}, [isInWLQueryResult]);
+	// 		const docSnap = await getDoc(userFavCol);
 
-	const addGame = async (gameData) => {
-		console.log(gameData);
-		try {
-			if (user === null) {
-				throw new Error("No user found");
-			}
-			const gamesRef = collection(db, "users");
-			const userUIDDoc = doc(gamesRef, user?.uid);
-			const userFavGames = collection(userUIDDoc, "favourites");
-			const userFavCol = doc(userFavGames, gameData?.id?.toString());
+	// 		if (docSnap?.exists()) {
+	// 			toast({
+	// 				title: "Error.",
+	// 				description: `Game already in the list`,
+	// 				status: "error",
+	// 				duration: 2500,
+	// 				position: "top",
+	// 				isClosable: true,
+	// 			});
+	// 		} else {
+	// 			await setDoc(userFavCol, gameData);
+	// 			setisInWL(true);
+	// 			toast({
+	// 				title: "Success.",
+	// 				description: `${game.name} added to your favourites.`,
+	// 				status: "success",
+	// 				duration: 2500,
+	// 				isClosable: true,
+	// 				position: "top-right",
+	// 			});
+	// 		}
+	// 	} catch (error) {
+	// 		console.log(error, "error from addGame");
+	// 	}
+	// };
 
-			const docSnap = await getDoc(userFavCol);
+	// const handleSave = () => {
+	// 	if (!user) {
+	// 		toast({
+	// 			title: "Error.",
+	// 			description: "Please log in.",
+	// 			status: "error",
+	// 			duration: 2500,
+	// 			isClosable: false,
+	// 			position: "top",
+	// 		});
+	// 	} else {
+	// 		addGame(game);
+	// 	}
+	// };
 
-			if (docSnap?.exists()) {
-				toast({
-					title: "Error.",
-					description: `Game already in the list`,
-					status: "error",
-					duration: 2500,
-					position: "top",
-					isClosable: true,
-				});
-			} else {
-				await setDoc(userFavCol, gameData);
-				setisInWL(true);
-				toast({
-					title: "Success.",
-					description: `${game.name} added to your favourites.`,
-					status: "success",
-					duration: 2500,
-					isClosable: true,
-					position: "top-right",
-				});
-			}
-		} catch (error) {
-			console.log(error, "error from addGame");
-		}
-	};
-
-	const handleSave = () => {
-		if (!user) {
-			toast({
-				title: "Error.",
-				description: "Please log in.",
-				status: "error",
-				duration: 2500,
-				isClosable: false,
-				position: "top",
-			});
-		} else {
-			addGame(game);
-		}
-	};
+	console.log("test");
 
 	return (
 		<>
@@ -211,11 +213,7 @@ const GameCard = ({ game, toggleView }) => {
 				/>
 
 				<Button>
-					<Icon
-						as={isInWL ? FaHeart : FaRegHeart}
-						onClick={handleSave}
-						boxSize={"18px"}
-					/>
+					<Icon as={isInWL ? FaHeart : FaRegHeart} boxSize={"18px"} />
 				</Button>
 				<CardBody>
 					<HStack marginBottom={4} justifyContent="space-between">

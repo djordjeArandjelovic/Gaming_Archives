@@ -9,6 +9,7 @@ import SignUp from "./pages/SignUp";
 
 function App() {
 	const [wishList, setWishList] = useState([]);
+
 	return (
 		<>
 			<BrowserRouter>

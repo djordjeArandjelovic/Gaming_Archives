@@ -17,14 +17,17 @@ export const useAuth = () => useContext(AuthContext);
 const AuthProvider = ({ children }) => {
 	const navigate = useNavigate();
 	const [user, setUser] = useState(null);
+	const [uid, setUid] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		const listen = onAuthStateChanged(auth, (user) => {
 			if (user) {
 				setUser(user);
+				setUid(user?.uid);
 			} else {
 				setUser(null);
+				setUid(null);
 			}
 			setIsLoading(false);
 		});
@@ -61,8 +64,8 @@ const AuthProvider = ({ children }) => {
 				logout,
 				googleSignIn,
 				user,
+				uid,
 				isLoading,
-				navigate,
 			}}
 		>
 			{children}

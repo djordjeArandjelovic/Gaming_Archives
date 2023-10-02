@@ -15,6 +15,8 @@ const Main = ({ wishList, setWishList }) => {
 	const [toggleView, setToggleView] = useState(true);
 	const { colorMode } = useColorMode();
 
+	// DB
+
 	return (
 		<Grid
 			bg={colorMode === "dark" ? "#151515" : ""}

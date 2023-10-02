@@ -53,6 +53,7 @@ const Genres = ({ onSelectGenre, selectedGenre, wishList, setWishList }) => {
 		if (!user) {
 			return;
 		}
+
 		const userFavGames = collection(db, "users", user?.uid, "favourites");
 		const favQuery = query(userFavGames);
 
@@ -67,7 +68,7 @@ const Genres = ({ onSelectGenre, selectedGenre, wishList, setWishList }) => {
 			.catch((err) =>
 				console.log("error from useEffect Profile (querySnapshot)", err)
 			);
-	}, [user, wishList]);
+	}, [user]);
 
 	if (isLoading) return <Spinner />;
 	if (error) return null;

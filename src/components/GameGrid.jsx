@@ -1,20 +1,14 @@
-import React from "react";
+import React, { memo, useState } from "react";
 import { Flex, SimpleGrid, Text } from "@chakra-ui/react";
 import useGames from "../hooks/useGames";
 import CardSkeleton from "./CardSkeleton";
 import GameCard from "./GameCard";
+import { useAuth } from "../context/useAuth";
 
-const GameGrid = ({
-	selectedGenre,
-	searchText,
-	toggleView,
-	selectedPlatform,
-}) => {
-	const { data, error, isLoading } = useGames(
-		selectedGenre,
-		searchText,
-		selectedPlatform
-	);
+const GameGrid = ({ selectedGenre, searchText, toggleView }) => {
+	const { data, error, isLoading } = useGames(selectedGenre, searchText);
+	const MemoizedGameCard = memo(GameCard);
+	const { user } = useAuth();
 	const skeletons = [
 		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
 	];
@@ -29,9 +23,9 @@ const GameGrid = ({
 					padding={"2%"}
 				>
 					{isLoading &&
-						skeletons.map((skeleton) => <CardSkeleton key={skeleton} />)}
+						skeletons?.map((skeleton) => <CardSkeleton key={skeleton} />)}
 					{data.map((game) => (
-						<GameCard key={game.id} game={game} />
+						<MemoizedGameCard key={game.id} game={game} />
 					))}
 				</SimpleGrid>
 			) : (
@@ -45,7 +39,11 @@ const GameGrid = ({
 					{isLoading &&
 						skeletons.map((skeleton) => <CardSkeleton key={skeleton} />)}
 					{data.map((game) => (
-						<GameCard toggleView={toggleView} key={game.id} game={game} />
+						<MemoizedGameCard
+							toggleView={toggleView}
+							key={game.id}
+							game={game}
+						/>
 					))}
 				</Flex>
 			)}

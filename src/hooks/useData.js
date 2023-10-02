@@ -8,11 +8,9 @@ const useData = (endpoint, requestConfig, deps = []) => {
 	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
-		const controller = new AbortController();
-
 		setIsLoading(true);
 		apiClient
-			.get(endpoint, { signal: controller.signal, ...requestConfig })
+			.get(endpoint, { ...requestConfig })
 			.then((res) => {
 				if (res) {
 					const parsedData = res.data.results.map((item) => ({
@@ -24,12 +22,9 @@ const useData = (endpoint, requestConfig, deps = []) => {
 				setIsLoading(false);
 			})
 			.catch((err) => {
-				if (err instanceof CanceledError) return;
 				setError(err.message);
 				setIsLoading(false);
 			});
-
-		return () => controller.abort();
 	}, [...deps]);
 
 	return { data, setData, error, isLoading };

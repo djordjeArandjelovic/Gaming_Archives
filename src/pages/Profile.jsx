@@ -39,12 +39,11 @@ import {
 import { db } from "../firebase";
 import { useEffect } from "react";
 import GameCard from "../components/GameCard";
-import { useNavigate } from "react-router-dom";
 
 const Profile = ({ wishList, setWishList }) => {
 	const { user } = useAuth();
 	const [reFetch, setReFetch] = useState(false);
-	const { isOpen, onOpen, onClose } = useDisclosure();
+	const { onOpen } = useDisclosure();
 	const { colorMode } = useColorMode();
 	const toast = useToast();
 
@@ -52,6 +51,7 @@ const Profile = ({ wishList, setWishList }) => {
 		if (!user) {
 			return;
 		}
+
 		const userFavGames = collection(db, "users", user?.uid, "favourites");
 		const favQuery = query(userFavGames);
 
@@ -66,7 +66,7 @@ const Profile = ({ wishList, setWishList }) => {
 			.catch((err) =>
 				console.log("error from useEffect Profile (querySnapshot)", err)
 			);
-	}, [user, wishList]);
+	}, [user]);
 
 	const removeGame = async (id) => {
 		try {
@@ -142,7 +142,7 @@ const Profile = ({ wishList, setWishList }) => {
 							>
 								user Profile:
 							</Heading>
-							<Button
+							{/* <Button
 								size={"sm"}
 								width={"40%"}
 								colorScheme={"orange"}
@@ -152,9 +152,9 @@ const Profile = ({ wishList, setWishList }) => {
 							>
 								Edit Profile
 							</Button>
-							{/* <Text fontSize={"lg"}>First Name:{newUser?.firstName}</Text>
+							<Text fontSize={"lg"}>First Name:{newUser?.firstName}</Text>
 							<Text fontSize={"lg"}>Last Name:{newUser?.lastName}</Text> */}
-							<Text fontSize={"lg"}> email: {user?.email} </Text>
+							<Text fontSize={"lg"}> {user?.email} </Text>
 							<Heading>Wishlist</Heading>
 							<List>
 								{wishList.map((game) => (
