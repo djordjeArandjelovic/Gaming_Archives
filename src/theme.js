@@ -6,14 +6,6 @@ const config = {
 
 const theme = extendTheme({
 	config,
-	// styles: {
-	// 	dark: {
-	// 		body: {
-	// 			bg: "#151515",
-	// 			color: "white",
-	// 		},
-	// 	},
-	// },
 });
 
 export default theme;
