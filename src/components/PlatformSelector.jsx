@@ -19,8 +19,6 @@ const PlatformSelector = ({ onSelectPlatform, selectedPlatform }) => {
 	return (
 		<Menu isLazy>
 			<MenuButton
-				fontFamily={"StarWars"}
-				fontWeight={"light"}
 				letterSpacing={"1px"}
 				as={Button}
 				rightIcon={<BsChevronDown />}

@@ -107,8 +107,6 @@ const LoginDrawer = () => {
 	return (
 		<>
 			<Button
-				// colorScheme="green"
-				// bg={"#4C565D"}
 				onClick={onOpen}
 				fontFamily={"StarWars"}
 				fontWeight={"light"}

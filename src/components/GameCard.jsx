@@ -17,8 +17,8 @@ import {
 	ModalContent,
 	ModalHeader,
 	ModalOverlay,
-	VStack,
 	useColorMode,
+	Icon,
 } from "@chakra-ui/react";
 import {
 	FaWindows,
@@ -31,7 +31,6 @@ import {
 import { MdPhoneIphone } from "react-icons/md";
 import { SiNintendo } from "react-icons/si";
 import { BsGlobe } from "react-icons/bs";
-import { Icon } from "@chakra-ui/react";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { useToast } from "@chakra-ui/react";
@@ -99,23 +98,6 @@ const GameCard = ({ game, toggleView }) => {
 	// DB;
 	const [isInWL, setisInWL] = useState(false);
 	const [isInWLQueryResult, setIsInWLQueryResult] = useState(false);
-
-	// useEffect(() => {
-	// 	if (user !== null && game) {
-	// 		const gamesRef = collection(db, "users");
-	// 		const userUIDDoc = doc(gamesRef, user?.uid || "");
-	// 		const userFavGames = collection(userUIDDoc, "favourites");
-	// 		const favouritesQuery = query(userFavGames, where("id", "==", game?.id));
-
-	// 		getDocs(favouritesQuery)
-	// 			.then((querySnapshot) => {
-	// 				setisInWL(!querySnapshot?.empty);
-	// 			})
-	// 			.catch((err) => {
-	// 				console.log(err, "error from geting docs");
-	// 			});
-	// 	}
-	// }, [game, uid]);
 
 	useEffect(() => {
 		if (user !== null && game) {

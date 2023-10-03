@@ -1,4 +1,11 @@
-import { Flex, Grid, GridItem, Show, useColorMode } from "@chakra-ui/react";
+import {
+	Flex,
+	Grid,
+	GridItem,
+	Hide,
+	Show,
+	useColorMode,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import Genres from "../components/Genres";
 import NavBar from "../components/NavBar";
@@ -7,6 +14,7 @@ import GenreMenu from "../components/GenreMenu";
 import ToggleView from "../components/ToggleView";
 import MoreDetails from "../components/MoreDetails";
 import PlatformSelector from "../components/PlatformSelector";
+import WishListOverview from "../components/WishListOverview";
 
 const Main = ({ wishList, setWishList }) => {
 	const [selectedGenre, setSelectedGenre] = useState(null);
@@ -51,27 +59,23 @@ const Main = ({ wishList, setWishList }) => {
 			{/* MAIN-GRID */}
 			<GridItem area={"main"}>
 				{/* ABOVE CARDS */}
-				{/* TODO: FIX SMALLEST SCREEN FLEX */}
 				<Flex ml={4} align={"center"}>
 					<Show above="md">
 						<ToggleView toggleView={toggleView} setToggleView={setToggleView} />
 					</Show>
-					{/* <PlatformSelector
-						onSelectPlatform={(platform) => setSelectedPlatform(platform)}
-						selectedPlatform={selectedPlatform}
-					/> */}
-					{/* <Show breakpoint="(max-width: 991px)">
+					<Show below="lg">
+						<PlatformSelector
+							onSelectPlatform={(platform) => setSelectedPlatform(platform)}
+							selectedPlatform={selectedPlatform}
+						/>
+					</Show>
+
+					<Show breakpoint="(max-width: 991px)">
 						<GenreMenu
 							selectedGenre={selectedGenre}
 							onSelectGenre={(genre) => setSelectedGenre(genre)}
 						/>
-					</Show> */}
-					{/* <Show breakpoint="(max-width: 767px)">
-						<MoreDetails
-							toggleView={toggleView}
-							setToggleView={setToggleView}
-						/>
-					</Show> */}
+					</Show>
 				</Flex>
 				{/* CARDS */}
 				<GameGrid

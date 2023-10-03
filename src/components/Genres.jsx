@@ -8,9 +8,11 @@ import {
 	Image,
 	List,
 	ListItem,
+	Show,
 	Spinner,
 	Text,
 	useColorMode,
+	Icon,
 } from "@chakra-ui/react";
 
 import useData from "../hooks/useData";
@@ -21,13 +23,45 @@ import { db } from "../firebase";
 import { Link } from "react-router-dom";
 import WishListOverview from "./WishListOverview";
 import NavBarProfile from "./NavBarProfile";
+import usePlatforms from "../hooks/usePlatforms";
+import {
+	FaWindows,
+	FaPlaystation,
+	FaXbox,
+	FaApple,
+	FaLinux,
+	FaAndroid,
+} from "react-icons/fa";
+import { MdPhoneIphone } from "react-icons/md";
+import { SiNintendo } from "react-icons/si";
+import { BsGlobe } from "react-icons/bs";
 
-const Genres = ({ onSelectGenre, selectedGenre, wishList, setWishList }) => {
+const Genres = ({
+	onSelectGenre,
+	selectedGenre,
+	wishList,
+	setWishList,
+	onSelectPlatform,
+}) => {
 	const { data, isLoading, error } = useData("/genres");
+	const { data: platformData } = usePlatforms();
 	const [refresh, setRefresh] = useState(true);
 	const [displayCount, setDisplayCount] = useState(3);
+	const [displayCountPl, setDisplayCountPl] = useState(4);
 	const { user } = useAuth();
 	const { colorMode } = useColorMode();
+
+	const icons = {
+		pc: FaWindows,
+		playstation: FaPlaystation,
+		xbox: FaXbox,
+		nintendo: SiNintendo,
+		mac: FaApple,
+		linux: FaLinux,
+		ios: MdPhoneIphone,
+		android: FaAndroid,
+		web: BsGlobe,
+	};
 
 	const croppedUrl = (url) => {
 		const index = url?.indexOf("media/") + "media/".length;
@@ -36,7 +70,9 @@ const Genres = ({ onSelectGenre, selectedGenre, wishList, setWishList }) => {
 
 	const handleRefresh = () => {
 		onSelectGenre([]);
+		onSelectPlatform(null);
 		setDisplayCount(3);
+		setDisplayCountPl(3);
 		setRefresh(true);
 	};
 
@@ -45,8 +81,17 @@ const Genres = ({ onSelectGenre, selectedGenre, wishList, setWishList }) => {
 		setRefresh(false);
 	};
 
+	const handlePlatform = (platform) => {
+		onSelectPlatform(platform);
+		setRefresh(false);
+	};
+
 	const handleSeeMore = () => {
 		setDisplayCount(data.length);
+	};
+
+	const handleSeeMorePlatforms = () => {
+		setDisplayCountPl(platformData.length);
 	};
 
 	useEffect(() => {
@@ -85,6 +130,7 @@ const Genres = ({ onSelectGenre, selectedGenre, wishList, setWishList }) => {
 			>
 				<NavBarProfile />
 			</Flex>
+
 			<Heading
 				color={refresh === true && colorMode === "dark" ? "#F7B263" : ""}
 				fontSize={"xl"}
@@ -129,13 +175,68 @@ const Genres = ({ onSelectGenre, selectedGenre, wishList, setWishList }) => {
 						</HStack>
 					</ListItem>
 				))}
-				{data.length > 5 && displayCount < data.length ? (
+				{data.length > 3 && displayCount < data.length ? (
 					<ListItem>
 						<HStack>
 							<Button
 								children={<ChevronDownIcon />}
 								size={"sm"}
 								onClick={handleSeeMore}
+							/>
+							<Text>Show all</Text>
+						</HStack>
+					</ListItem>
+				) : (
+					<ListItem>
+						<HStack>
+							<Button
+								children={<ChevronUpIcon />}
+								size={"sm"}
+								onClick={handleRefresh}
+							/>
+							<Text>Show less</Text>
+						</HStack>
+					</ListItem>
+				)}
+			</List>
+			<List paddingX={"10px"} mt={5} width={"200px"}>
+				<Heading
+					color={colorMode === "dark" ? "#F7B263" : ""}
+					mb={2}
+					fontSize={"xl"}
+				>
+					Platoforms
+				</Heading>
+				{platformData.slice(0, displayCountPl).map((platform, index) =>
+					index === 1 ? null : (
+						<ListItem mb={1} key={platform?.id}>
+							<HStack gap={3} align={"center"}>
+								<Icon
+									objectFit="cover"
+									boxSize={"24px"}
+									borderRadius={8}
+									as={icons[platform?.slug]}
+								/>
+								<Flex align={"flex-start"}>
+									<Button
+										onClick={() => handlePlatform(platform)}
+										variant="link"
+										fontSize={"md"}
+									>
+										{platform?.name}
+									</Button>
+								</Flex>
+							</HStack>
+						</ListItem>
+					)
+				)}
+				{platformData.length > 3 && displayCountPl < platformData.length ? (
+					<ListItem>
+						<HStack>
+							<Button
+								children={<ChevronDownIcon />}
+								size={"sm"}
+								onClick={handleSeeMorePlatforms}
 							/>
 							<Text>Show all</Text>
 						</HStack>

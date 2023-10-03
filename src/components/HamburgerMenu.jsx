@@ -5,15 +5,16 @@ import {
 	MenuList,
 	IconButton,
 	Button,
+	useColorMode,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import React from "react";
 import { Link } from "react-router-dom";
-import LoginDrawer from "./LoginDrawer";
 import { useAuth } from "../context/useAuth";
 
 const HamburgerMenu = () => {
 	const { user, logout } = useAuth();
+	const { colorMode } = useColorMode();
 	return (
 		<Menu>
 			<MenuButton
@@ -22,14 +23,29 @@ const HamburgerMenu = () => {
 				icon={<HamburgerIcon />}
 				variant="outline"
 			/>
-			<MenuList>
-				<MenuItem>
+			<MenuList bg={colorMode === "dark" ? "#151515" : ""}>
+				<MenuItem
+					_hover={{
+						bg: "#282828",
+					}}
+					bg={colorMode === "dark" ? "#151515" : ""}
+				>
 					<Link to={"/"}>Games</Link>
 				</MenuItem>
-				<MenuItem>
+				<MenuItem
+					_hover={{
+						bg: "#282828",
+					}}
+					bg={colorMode === "dark" ? "#151515" : ""}
+				>
 					<Link to={"/profile"}>Profile</Link>
 				</MenuItem>
-				<MenuItem>
+				<MenuItem
+					_hover={{
+						bg: "#282828",
+					}}
+					bg={colorMode === "dark" ? "#151515" : ""}
+				>
 					{!user ? (
 						<Link to={"/login"}>LogIn</Link>
 					) : (
@@ -37,7 +53,6 @@ const HamburgerMenu = () => {
 							LogOut
 						</Link>
 					)}
-					<Link>{/* <LoginDrawer /> */}</Link>
 				</MenuItem>
 			</MenuList>
 		</Menu>

@@ -10,26 +10,45 @@ import {
 } from "@chakra-ui/react";
 import Genres from "./Genres";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import useData from "../hooks/useData";
+import { BsChevronDown } from "react-icons/bs";
 
 const GenreMenu = ({ onSelectGenre, selectedGenre }) => {
 	const { colorMode } = useColorMode();
+	const { data } = useData("/genres");
 	return (
-		<Box marginLeft={3}>
-			<Menu>
-				<MenuButton
-					fontFamily={"StarWars"}
-					fontWeight={"light"}
-					letterSpacing={"1px"}
-					as={Button}
-					rightIcon={<ChevronDownIcon />}
+		<Menu isLazy>
+			<MenuButton
+				ml={2}
+				letterSpacing={"1px"}
+				as={Button}
+				rightIcon={<BsChevronDown />}
+			>
+				{selectedGenre?.name || "Genres"}
+			</MenuButton>
+			<MenuList closeOnSelect={true} bg={colorMode === "dark" ? "#151515" : ""}>
+				<MenuItem
+					onClick={() => onSelectGenre(null)}
+					bg={colorMode === "dark" ? "#151515" : ""}
 				>
-					Genres
-				</MenuButton>
-				<MenuList bg={colorMode === "dark" ? "#151515" : ""}>
-					<Genres selectedGenre={selectedGenre} onSelectGenre={onSelectGenre} />
-				</MenuList>
-			</Menu>
-		</Box>
+					All
+				</MenuItem>
+				{data.map((genre, index) =>
+					index === 1 ? null : (
+						<MenuItem
+							onClick={() => onSelectGenre(genre)}
+							bg={colorMode === "dark" ? "#151515" : ""}
+							_hover={{
+								bg: "#282828",
+							}}
+							key={genre.id}
+						>
+							{genre.name}
+						</MenuItem>
+					)
+				)}
+			</MenuList>
+		</Menu>
 	);
 };
 
