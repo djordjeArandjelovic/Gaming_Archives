@@ -4,6 +4,7 @@ import {
 	Badge,
 	Box,
 	Button,
+	Container,
 	Flex,
 	HStack,
 	Heading,
@@ -77,96 +78,135 @@ const GameDetails = ({ data, isLoading, wishlist }) => {
 	}
 
 	return (
-		<Wrapper>
-			<Box className="content">
-				<Box>
-					<Image src={croppedUrl(data?.background_image)} borderRadius={10} />
-					<Box mt={2}>
-						<Text textAlign={"center"}>
-							Read more about the game @
-							<Badge>
-								<a href={data?.website} target="_blank">
-									{data?.website}
-								</a>
-							</Badge>
-						</Text>
-						<HStack>
-							<Button onClick={() => lazyDev()} mt={5} width={"300px"}>
-								Add to favourites
-								<Icon ml={2} as={FaRegHeart} boxSize={"18px"} />
-								{/* <Icon as={isInWL ? FaHeart : FaRegHeart} boxSize={"18px"} /> */}
-							</Button>
-							<Button cursor={"initial"} mt={5} width={"300px"}>
-								Developed by:{" "}
-								{data?.developers?.map((dev) => (
-									<Text ml={1} key={dev.id}>
-										{dev?.name}
-									</Text>
-								))}
-							</Button>
-						</HStack>
-					</Box>
-				</Box>
-				<Box className="desc" width={"50%"}>
-					<Box
-						margin={"auto"}
-						width={"80%"}
-						height={"20px"}
-						display={"flex"}
-						justifyContent={"space-between"}
-						alignItems={"center"}
-					>
-						<Badge fontSize={"14px"}>{data?.released}</Badge>
-						<HStack>
-							{data?.parent_platforms?.map((platform) => (
-								<Icon
-									key={platform?.platform.id}
-									color="white"
-									as={icons[platform?.platform.slug]}
-								/>
-							))}
-						</HStack>
-						<Text letterSpacing={"1px"}>
-							Avrage playtime: {data?.playtime} hours
-						</Text>
-					</Box>
-					<Heading size={"4xl"} textAlign={"center"} py={5}>
-						{data?.name}
-					</Heading>
-
-					<Text>
-						{fullText ? data?.description_raw : limitText()}
-						<Text
-							color={"blue.200"}
-							onClick={() => setFullText(!fullText)}
-							as={"span"}
-							cursor={"pointer"}
-						>
-							{fullText ? "...show less" : "...show more"}
-						</Text>
+		<Flex
+			justify={"center"}
+			align={"center"}
+			mt={10}
+			gap={5}
+			direction={{
+				base: "column",
+				md: "column",
+				lg: "row",
+			}}
+			mb={5}
+			padding={10}
+		>
+			{/* <Box className="content"> */}
+			<Box width={"60%"}>
+				<Image src={croppedUrl(data?.background_image)} borderRadius={10} />
+				<Box mt={2}>
+					<Text textAlign={"center"}>
+						Read more about the game @
+						<Badge>
+							<a href={data?.website} target="_blank">
+								{data?.website}
+							</a>
+						</Badge>
 					</Text>
+					<Flex
+						gap={2}
+						direction={{
+							base: "column",
+							md: "column",
+							lg: "row",
+						}}
+						justify={"center"}
+						align={"center"}
+					>
+						<Button onClick={() => lazyDev()} mt={5}>
+							Add to favourites
+							<Icon ml={2} as={FaRegHeart} boxSize={"18px"} />
+							{/* <Icon as={isInWL ? FaHeart : FaRegHeart} boxSize={"18px"} /> */}
+						</Button>
+						<Button cursor={"initial"} mt={5}>
+							Developed by:{" "}
+							{data?.developers?.map((dev) => (
+								<Text ml={1} key={dev.id}>
+									{dev?.name}
+								</Text>
+							))}
+						</Button>
+					</Flex>
 				</Box>
 			</Box>
-			<Box className="additional"></Box>
-		</Wrapper>
+			<Box width={"80%"}>
+				<Flex
+					margin={"auto"}
+					width={"80%"}
+					direction={{
+						base: "column",
+						md: "column",
+						lg: "row",
+					}}
+					gap={5}
+					justifyContent={"space-between"}
+					alignItems={"center"}
+				>
+					<Badge fontSize={"14px"}>{data?.released}</Badge>
+					<HStack>
+						{data?.parent_platforms?.map((platform) => (
+							<Icon
+								key={platform?.platform.id}
+								color="white"
+								as={icons[platform?.platform.slug]}
+							/>
+						))}
+					</HStack>
+					<Text letterSpacing={"1px"}>
+						Avrage playtime: {data?.playtime} hours
+					</Text>
+				</Flex>
+				<Heading
+					size={{
+						base: "3xl",
+						md: "4xl",
+						lg: "4xl",
+					}}
+					textAlign={"center"}
+					py={5}
+				>
+					{data?.name}
+				</Heading>
+
+				<Text>
+					{fullText ? data?.description_raw : limitText()}
+					<Text
+						color={"blue.200"}
+						onClick={() => setFullText(!fullText)}
+						as={"span"}
+						cursor={"pointer"}
+					>
+						{fullText ? "...show less" : "...show more"}
+					</Text>
+				</Text>
+			</Box>
+			{/* </Box> */}
+		</Flex>
 	);
 };
 
-const Wrapper = styled.section`
-	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-	height: 88vh;
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding-top: 2rem;
-	padding-inline: 2rem;
-	background-color: #151515;
-	.content {
-		display: flex;
-		gap: 2rem;
-		justify-content: space-around;
-	}
-`;
+// const Wrapper = styled.section`
+// 	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+// 	height: 88vh;
+// 	padding: 2rem;
+// 	display: grid;
+// 	gap: 3rem 1.5rem;
+// 	margin: auto;
+// 	align-items: center;
+// 	background-color: #151515;
+// 	margin-bottom: 2rem;
+// 	.content {
+// 		display: flex;
+// 		gap: 2rem;
+// 		justify-content: space-around;
+// 	}
+// 	@media (max-width: 1250px) {
+// 		.content {
+// 			flex-direction: column;
+// 			align-items: center;
+// 			margin-bottom: 2rem;
+// 		}
+// 	}
+// `;
 
 export default GameDetails;
