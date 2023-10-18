@@ -1,7 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import apiClient from "../services/api-client";
+import React, { useState } from "react";
 import {
 	Badge,
 	Box,
@@ -13,6 +11,7 @@ import {
 	Image,
 	Spinner,
 	Text,
+	useToast,
 } from "@chakra-ui/react";
 import styled from "styled-components";
 import {
@@ -29,9 +28,8 @@ import { SiNintendo } from "react-icons/si";
 import { MdPhoneIphone } from "react-icons/md";
 import { BsGlobe } from "react-icons/bs";
 
-// const filteredScreenshots = data?.short_screenshots.slice(1);
-
 const GameDetails = ({ data, isLoading, wishlist }) => {
+	const toast = useToast();
 	const [fullText, setFullText] = useState(false);
 	// console.log(data);
 
@@ -58,6 +56,18 @@ const GameDetails = ({ data, isLoading, wishlist }) => {
 		web: BsGlobe,
 	};
 
+	const lazyDev = () => {
+		toast({
+			title: "Error.",
+			description:
+				"You like this game! GREAT! But sadly our developer was lazy and didn't create this function, please go back to home page to add this game to your wishlist.",
+			status: "error",
+			duration: 10000,
+			isClosable: true,
+			position: "top",
+		});
+	};
+
 	if (isLoading) {
 		return (
 			<Flex height={"100vh"} justify={"center"} align={"center"}>
@@ -80,11 +90,21 @@ const GameDetails = ({ data, isLoading, wishlist }) => {
 								</a>
 							</Badge>
 						</Text>
-						<Button mt={5} width={"300px"}>
-							Add to favourites
-							<Icon ml={2} as={FaRegHeart} boxSize={"18px"} />
-							{/* <Icon as={isInWL ? FaHeart : FaRegHeart} boxSize={"18px"} /> */}
-						</Button>
+						<HStack>
+							<Button onClick={() => lazyDev()} mt={5} width={"300px"}>
+								Add to favourites
+								<Icon ml={2} as={FaRegHeart} boxSize={"18px"} />
+								{/* <Icon as={isInWL ? FaHeart : FaRegHeart} boxSize={"18px"} /> */}
+							</Button>
+							<Button cursor={"initial"} mt={5} width={"300px"}>
+								Developed by:{" "}
+								{data?.developers?.map((dev) => (
+									<Text ml={1} key={dev.id}>
+										{dev?.name}
+									</Text>
+								))}
+							</Button>
+						</HStack>
 					</Box>
 				</Box>
 				<Box className="desc" width={"50%"}>
