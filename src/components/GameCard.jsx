@@ -45,7 +45,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { useAuth } from "../context/useAuth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const GameCard = ({ game, toggleView }) => {
 	const { user, uid } = useAuth();
@@ -176,98 +176,100 @@ const GameCard = ({ game, toggleView }) => {
 
 	return (
 		<>
-			<Card
-				bg={colorMode === "dark" ? "#202020" : ""}
-				width={{ sm: "100%", md: "90%", lg: "90%", xl: "80%" }}
-				borderRadius={"10px"}
-				overflow="hidden"
-				margin={{ sm: "auto", md: "auto", lg: "0", xl: "0" }}
-				_hover={{
-					boxShadow: "3px 6px 10px rgba(247, 178, 99, 0.5)",
-				}}
-			>
-				<Image
-					src={
-						toggleView === false
-							? game?.background_image || ""
-							: croppedUrl(game?.background_image || "")
-					}
-				/>
+			<Link to={`/games/${game.id}`}>
+				<Card
+					bg={colorMode === "dark" ? "#202020" : ""}
+					width={{ sm: "100%", md: "90%", lg: "90%", xl: "80%" }}
+					borderRadius={"10px"}
+					overflow="hidden"
+					margin={{ sm: "auto", md: "auto", lg: "0", xl: "0" }}
+					_hover={{
+						boxShadow: "3px 6px 10px rgba(247, 178, 99, 0.5)",
+					}}
+				>
+					<Image
+						src={
+							toggleView === false
+								? game?.background_image || ""
+								: croppedUrl(game?.background_image || "")
+						}
+					/>
 
-				<Button onClick={handleSave}>
-					<Icon as={isInWL ? FaHeart : FaRegHeart} boxSize={"18px"} />
-				</Button>
-				<CardBody>
-					<HStack marginBottom={4} justifyContent="space-between">
-						<HStack>
-							{game?.parent_platforms?.map((platform) => (
-								<Icon
-									key={platform?.platform.id}
-									color="gray.500"
-									as={icons[platform?.platform.slug]}
-								/>
-							))}
-						</HStack>
-						<HStack>
-							{toggleView === false ? <Text>Score:</Text> : null}
-							<Badge
-								colorScheme={scoreColor(game?.metacritic)}
-								fontSize={toggleView === false ? "24px" : "14px"}
-								paddingX={1.5}
-								borderRadius={4}
-							>
-								{game?.metacritic}
-							</Badge>
-						</HStack>
-					</HStack>
-					<Heading
-						fontSize={toggleView === false ? "3xl" : "xl"}
-						textAlign={toggleView === false ? "center" : "left"}
-					>
-						{game?.name}
-					</Heading>
-					{toggleView === false ? (
-						<>
-							<Text mt={2} fontSize={"sm"}>
-								Release date: {game?.released}
-							</Text>
-							<Text fontSize={"xl"}>Screenshots:</Text>
-							<Box
-								display={"grid"}
-								gridTemplateColumns={"repeat(2, 1fr)"}
-								gap={2}
-							>
-								{filteredScreenshots?.map((screenshot) => (
-									<Box key={screenshot.id}>
-										<Img
-											margin={"auto"}
-											src={screenshot.image}
-											transition={"0.5s"}
-											_hover={{
-												transform: "scale(1.05)",
-											}}
-											cursor={"zoom-in"}
-											onClick={() => onOpen(screenshot)}
-										/>
-									</Box>
+					<Button onClick={handleSave}>
+						<Icon as={isInWL ? FaHeart : FaRegHeart} boxSize={"18px"} />
+					</Button>
+					<CardBody>
+						<HStack marginBottom={4} justifyContent="space-between">
+							<HStack>
+								{game?.parent_platforms?.map((platform) => (
+									<Icon
+										key={platform?.platform.id}
+										color="gray.500"
+										as={icons[platform?.platform.slug]}
+									/>
 								))}
-								<Modal size={"4xl"} isOpen={isOpen} onClose={onClose}>
-									<ModalOverlay />
-									<ModalContent bg={colorMode === "dark" ? "#202020" : ""}>
-										<ModalHeader>{game?.name}</ModalHeader>
-										<ModalCloseButton />
-										<ModalBody>
-											{selectedScreenshot && (
-												<Image src={selectedScreenshot?.image} />
-											)}
-										</ModalBody>
-									</ModalContent>
-								</Modal>
-							</Box>
-						</>
-					) : null}
-				</CardBody>
-			</Card>
+							</HStack>
+							<HStack>
+								{toggleView === false ? <Text>Score:</Text> : null}
+								<Badge
+									colorScheme={scoreColor(game?.metacritic)}
+									fontSize={toggleView === false ? "24px" : "14px"}
+									paddingX={1.5}
+									borderRadius={4}
+								>
+									{game?.metacritic}
+								</Badge>
+							</HStack>
+						</HStack>
+						<Heading
+							fontSize={toggleView === false ? "3xl" : "xl"}
+							textAlign={toggleView === false ? "center" : "left"}
+						>
+							{game?.name}
+						</Heading>
+						{toggleView === false ? (
+							<>
+								<Text mt={2} fontSize={"sm"}>
+									Release date: {game?.released}
+								</Text>
+								<Text fontSize={"xl"}>Screenshots:</Text>
+								<Box
+									display={"grid"}
+									gridTemplateColumns={"repeat(2, 1fr)"}
+									gap={2}
+								>
+									{filteredScreenshots?.map((screenshot) => (
+										<Box key={screenshot.id}>
+											<Img
+												margin={"auto"}
+												src={screenshot.image}
+												transition={"0.5s"}
+												_hover={{
+													transform: "scale(1.05)",
+												}}
+												cursor={"zoom-in"}
+												onClick={() => onOpen(screenshot)}
+											/>
+										</Box>
+									))}
+									<Modal size={"4xl"} isOpen={isOpen} onClose={onClose}>
+										<ModalOverlay />
+										<ModalContent bg={colorMode === "dark" ? "#202020" : ""}>
+											<ModalHeader>{game?.name}</ModalHeader>
+											<ModalCloseButton />
+											<ModalBody>
+												{selectedScreenshot && (
+													<Image src={selectedScreenshot?.image} />
+												)}
+											</ModalBody>
+										</ModalContent>
+									</Modal>
+								</Box>
+							</>
+						) : null}
+					</CardBody>
+				</Card>
+			</Link>
 		</>
 	);
 };
