@@ -35,7 +35,6 @@ const Main = ({ wishList, setWishList }) => {
 			<GridItem area={"nav"} mb={5}>
 				<NavBar
 					onSearch={(searchText) => {
-						console.log(searchText);
 						setSearchText(searchText);
 					}}
 				/>

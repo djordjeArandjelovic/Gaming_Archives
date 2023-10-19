@@ -8,7 +8,6 @@ const GameDetailsPage = ({ wishlist }) => {
 	const { id } = useParams();
 	const [data, setData] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
-	console.log(data);
 
 	useEffect(() => {
 		setIsLoading(true);

@@ -32,7 +32,6 @@ import { BsGlobe } from "react-icons/bs";
 const GameDetails = ({ data, isLoading, wishlist }) => {
 	const toast = useToast();
 	const [fullText, setFullText] = useState(false);
-	// console.log(data);
 
 	const croppedUrl = (url) => {
 		const index = url?.indexOf("media/") + "media/".length;
