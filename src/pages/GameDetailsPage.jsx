@@ -22,13 +22,24 @@ const GameDetailsPage = ({ wishlist }) => {
 				console.log(err);
 				setIsLoading(false);
 			});
+	}, [id]);
+
+	const [hasMounted, setHasMounted] = useState(false);
+
+	useEffect(() => {
+		setHasMounted(true);
 	}, []);
-	return (
-		<>
-			<NavBar />
-			<GameDetails wishlist={wishlist} data={data} isLoading={isLoading} />
-		</>
-	);
+
+	if (!hasMounted) {
+		return null;
+	} else {
+		return (
+			<>
+				<NavBar />
+				<GameDetails wishlist={wishlist} data={data} isLoading={isLoading} />
+			</>
+		);
+	}
 };
 
 export default GameDetailsPage;

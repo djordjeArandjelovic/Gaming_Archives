@@ -122,7 +122,7 @@ const GameDetails = ({ data, isLoading, wishlist }) => {
 							Developed by:{" "}
 							{data?.developers?.map((dev) => (
 								<Text ml={1} key={dev.id}>
-									{dev?.name}
+									{dev?.name[0]}
 								</Text>
 							))}
 						</Button>

@@ -21,7 +21,6 @@ const Main = ({ wishList, setWishList }) => {
 	const [searchText, setSearchText] = useState("");
 	const [selectedPlatform, setSelectedPlatform] = useState(null);
 	const [toggleView, setToggleView] = useState(true);
-	const { colorMode } = useColorMode();
 
 	// DB
 

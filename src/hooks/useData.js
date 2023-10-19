@@ -10,7 +10,7 @@ const useData = (endpoint, requestConfig, deps = []) => {
 	useEffect(() => {
 		setIsLoading(true);
 		apiClient
-			.get(endpoint, { ...requestConfig })
+			.get(endpoint, { ...requestConfig }) // appended endoing && requestConfig = params
 			.then((res) => {
 				if (res) {
 					const parsedData = res.data.results.map((item) => ({
@@ -25,9 +25,12 @@ const useData = (endpoint, requestConfig, deps = []) => {
 				setError(err.message);
 				setIsLoading(false);
 			});
-	}, [...deps]);
+	}, [...deps]); // array of deps for refetch
 
-	return { data, setData, error, isLoading };
+	return { data, error, isLoading };
 };
 
 export default useData;
+
+// TODO:
+// CLEANUP WITH AXIOS ABORT CONTROLER

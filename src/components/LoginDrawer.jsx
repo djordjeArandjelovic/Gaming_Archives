@@ -118,7 +118,7 @@ const LoginDrawer = () => {
 			<Drawer isOpen={isOpen} placement="right" onClose={onClose} size={"sm"}>
 				<DrawerOverlay />
 				<DrawerContent>
-					<DrawerCloseButton />
+					<DrawerCloseButton zIndex={"5"} />
 					<DrawerHeader
 						textAlign={"center"}
 						color={"blue.400"}
@@ -199,6 +199,7 @@ const LoginDrawer = () => {
 										{isLoading ? "Please wait..." : "Login"}
 									</Button>
 									<Box
+										zIndex={"5"}
 										display={"flex"}
 										justifyContent={"center"}
 										alignItems={"center"}

@@ -46,6 +46,7 @@ import {
 import { db } from "../firebase";
 import { useAuth } from "../context/useAuth";
 import { Link, useNavigate } from "react-router-dom";
+import { EventBus } from "../EventBus";
 
 const GameCard = ({ game, toggleView }) => {
 	const { user, uid } = useAuth();
@@ -143,8 +144,10 @@ const GameCard = ({ game, toggleView }) => {
 				});
 			} else {
 				await setDoc(userFavCol, gameData);
+				EventBus.emit("gameAddedToWishlist");
 				setisInWL(true);
-				navigate(0);
+
+				// navigate(0);
 				toast({
 					title: "Success.",
 					description: `${game.name} added to your favourites.`,
