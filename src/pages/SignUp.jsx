@@ -124,12 +124,7 @@ const SignUp = () => {
 
 	return (
 		<>
-			<Flex
-				bg={colorMode === "dark" ? "#151515" : ""}
-				minH={"100vh"}
-				align={"center"}
-				justify={"center"}
-			>
+			<Flex minH={"100vh"} align={"center"} justify={"center"}>
 				<Stack
 					className="signUpStack"
 					spacing={8}
@@ -154,12 +149,7 @@ const SignUp = () => {
 							Do. or do Not. There is no <span>try.</span>
 						</Heading>
 					</Stack>
-					<Box
-						rounded={"lg"}
-						bg={colorMode === "dark" ? "#151515" : ""}
-						boxShadow={"lg"}
-						p={8}
-					>
+					<Box rounded={"lg"} boxShadow={"lg"} p={8}>
 						<p className={errMsg ? "errmsg" : "hide"}>{errMsg}</p>
 						<form onSubmit={handleSubmit} noValidate>
 							<Stack spacing={4}>

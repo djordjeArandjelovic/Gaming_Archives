@@ -26,18 +26,12 @@ const GenreMenu = ({ onSelectGenre, selectedGenre }) => {
 			>
 				{selectedGenre?.name || "Genres"}
 			</MenuButton>
-			<MenuList closeOnSelect={true} bg={colorMode === "dark" ? "#151515" : ""}>
-				<MenuItem
-					onClick={() => onSelectGenre(null)}
-					bg={colorMode === "dark" ? "#151515" : ""}
-				>
-					All
-				</MenuItem>
+			<MenuList closeOnSelect={true}>
+				<MenuItem onClick={() => onSelectGenre(null)}>All</MenuItem>
 				{data.map((genre, index) =>
 					index === 1 ? null : (
 						<MenuItem
 							onClick={() => onSelectGenre(genre)}
-							bg={colorMode === "dark" ? "#151515" : ""}
 							_hover={{
 								bg: "#282828",
 							}}

@@ -117,7 +117,7 @@ const LoginDrawer = () => {
 
 			<Drawer isOpen={isOpen} placement="right" onClose={onClose} size={"sm"}>
 				<DrawerOverlay />
-				<DrawerContent bg={colorMode === "dark" ? "#151515" : ""}>
+				<DrawerContent>
 					<DrawerCloseButton />
 					<DrawerHeader
 						textAlign={"center"}

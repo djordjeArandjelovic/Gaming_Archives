@@ -193,7 +193,6 @@ const GameDetails = ({ data, isLoading, wishlist }) => {
 // 	gap: 3rem 1.5rem;
 // 	margin: auto;
 // 	align-items: center;
-// 	background-color: #151515;
 // 	margin-bottom: 2rem;
 // 	.content {
 // 		display: flex;

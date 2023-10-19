@@ -27,7 +27,6 @@ const Main = ({ wishList, setWishList }) => {
 
 	return (
 		<Grid
-			bg={colorMode === "dark" ? "#151515" : ""}
 			templateAreas={{
 				base: `"nav" "main"`,
 				lg: `"nav nav" "aside main"`,

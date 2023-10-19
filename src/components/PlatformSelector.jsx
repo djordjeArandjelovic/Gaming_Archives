@@ -25,18 +25,12 @@ const PlatformSelector = ({ onSelectPlatform, selectedPlatform }) => {
 			>
 				{selectedPlatform?.name.toLowerCase() || "Platforms"}
 			</MenuButton>
-			<MenuList closeOnSelect={true} bg={colorMode === "dark" ? "#151515" : ""}>
-				<MenuItem
-					onClick={() => onSelectPlatform(null)}
-					bg={colorMode === "dark" ? "#151515" : ""}
-				>
-					All
-				</MenuItem>
+			<MenuList closeOnSelect={true}>
+				<MenuItem onClick={() => onSelectPlatform(null)}>All</MenuItem>
 				{data.map((platform, index) =>
 					index === 1 ? null : (
 						<MenuItem
 							onClick={() => onSelectPlatform(platform)}
-							bg={colorMode === "dark" ? "#151515" : ""}
 							_hover={{
 								bg: "#282828",
 							}}

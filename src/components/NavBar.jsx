@@ -27,7 +27,6 @@ const NavBar = ({ onSearch }) => {
 		<>
 			{/* MAIN HSTACK */}
 			<HStack
-				bg={colorMode === "dark" ? "#151515" : ""}
 				justify={"space-between"}
 				padding={{
 					base: "0.2rem 0.5rem",
@@ -85,7 +84,6 @@ const NavBar = ({ onSearch }) => {
 			</HStack>
 			{/* HEADING */}
 			<Heading
-				bg={colorMode === "dark" ? "#151515" : ""}
 				className="heading"
 				fontSize={"3xl"}
 				textAlign="center"

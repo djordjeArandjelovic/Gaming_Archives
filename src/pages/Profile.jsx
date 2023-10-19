@@ -100,11 +100,7 @@ const Profile = ({ wishList, setWishList }) => {
 		return (
 			<>
 				<NavBar />
-				<Flex
-					height={"86vh"}
-					bg={colorMode === "dark" ? "#151515" : ""}
-					justify={"center"}
-				>
+				<Flex height={"86vh"} justify={"center"}>
 					<Heading
 						textAlign={"center"}
 						fontSize={"2xl"}
@@ -125,7 +121,6 @@ const Profile = ({ wishList, setWishList }) => {
 			<Box width={"100%"}>
 				<NavBar />
 				<Flex
-					bg={colorMode === "dark" ? "#151515" : ""}
 					height={"100%"}
 					px={5}
 					gap={2}
@@ -155,7 +150,7 @@ const Profile = ({ wishList, setWishList }) => {
 							</List>
 						</Flex>
 					</Box>
-					<Box bg={colorMode === "dark" ? "#151515" : ""} mt={2}>
+					<Box mt={2}>
 						<Heading
 							mt={2.5}
 							fontFamily={"StarWars"}

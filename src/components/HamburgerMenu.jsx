@@ -23,12 +23,11 @@ const HamburgerMenu = () => {
 				icon={<HamburgerIcon />}
 				variant="outline"
 			/>
-			<MenuList bg={colorMode === "dark" ? "#151515" : ""}>
+			<MenuList>
 				<MenuItem
 					_hover={{
 						bg: "#282828",
 					}}
-					bg={colorMode === "dark" ? "#151515" : ""}
 				>
 					<Link to={"/"}>Games</Link>
 				</MenuItem>
@@ -36,7 +35,6 @@ const HamburgerMenu = () => {
 					_hover={{
 						bg: "#282828",
 					}}
-					bg={colorMode === "dark" ? "#151515" : ""}
 				>
 					<Link to={"/profile"}>Profile</Link>
 				</MenuItem>
@@ -44,7 +42,6 @@ const HamburgerMenu = () => {
 					_hover={{
 						bg: "#282828",
 					}}
-					bg={colorMode === "dark" ? "#151515" : ""}
 				>
 					{!user ? (
 						<Link to={"/login"}>LogIn</Link>
