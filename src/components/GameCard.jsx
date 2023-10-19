@@ -17,7 +17,6 @@ import {
 	ModalContent,
 	ModalHeader,
 	ModalOverlay,
-	useColorMode,
 	Icon,
 } from "@chakra-ui/react";
 import {
@@ -51,8 +50,6 @@ import { EventBus } from "../EventBus";
 const GameCard = ({ game, toggleView }) => {
 	const { user, uid } = useAuth();
 	const toast = useToast();
-	const { colorMode } = useColorMode();
-	const navigate = useNavigate();
 
 	// SCREENSHOT GALLERY
 	const [isOpen, setIsOpen] = useState(false);
@@ -180,7 +177,6 @@ const GameCard = ({ game, toggleView }) => {
 	return (
 		<>
 			<Card
-				bg={colorMode === "dark" ? "#202020" : ""}
 				width={{ sm: "100%", md: "90%", lg: "90%", xl: "80%" }}
 				borderRadius={"10px"}
 				overflow="hidden"
@@ -258,7 +254,7 @@ const GameCard = ({ game, toggleView }) => {
 								))}
 								<Modal size={"4xl"} isOpen={isOpen} onClose={onClose}>
 									<ModalOverlay />
-									<ModalContent bg={colorMode === "dark" ? "#202020" : ""}>
+									<ModalContent>
 										<ModalHeader>{game?.name}</ModalHeader>
 										<ModalCloseButton />
 										<ModalBody>
