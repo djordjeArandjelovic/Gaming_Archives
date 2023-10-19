@@ -1,6 +1,3 @@
-// import { EventEmitter } from "events";
-// export const EventBus = new EventEmitter();
-
 class EventBusClass {
 	constructor() {
 		this.events = {};

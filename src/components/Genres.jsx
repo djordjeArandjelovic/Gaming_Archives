@@ -8,13 +8,11 @@ import {
 	Image,
 	List,
 	ListItem,
-	Show,
 	Spinner,
 	Text,
 	useColorMode,
 	Icon,
 } from "@chakra-ui/react";
-
 import useData from "../hooks/useData";
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import { useAuth } from "../context/useAuth";
@@ -35,7 +33,7 @@ import {
 import { MdPhoneIphone } from "react-icons/md";
 import { SiNintendo } from "react-icons/si";
 import { BsGlobe } from "react-icons/bs";
-import { EventBus } from "../EventBus";
+import { EventBus } from "../services/EventBus";
 
 const Genres = ({
 	onSelectGenre,

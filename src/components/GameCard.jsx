@@ -45,7 +45,7 @@ import {
 import { db } from "../firebase";
 import { useAuth } from "../context/useAuth";
 import { Link, useNavigate } from "react-router-dom";
-import { EventBus } from "../EventBus";
+import { EventBus } from "../services/EventBus";
 
 const GameCard = ({ game, toggleView }) => {
 	const { user, uid } = useAuth();
