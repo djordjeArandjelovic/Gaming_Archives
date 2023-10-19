@@ -43,11 +43,7 @@ import { useNavigate } from "react-router-dom";
 
 const Profile = ({ wishList, setWishList }) => {
 	const { user } = useAuth();
-	const [reFetch, setReFetch] = useState(false);
-	const { onOpen } = useDisclosure();
-	const { colorMode } = useColorMode();
 	const toast = useToast();
-	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (!user) {
@@ -71,7 +67,6 @@ const Profile = ({ wishList, setWishList }) => {
 	}, [user]);
 
 	const removeGame = async (id) => {
-		console.log("test");
 		try {
 			if (!user) {
 				return;
@@ -87,9 +82,10 @@ const Profile = ({ wishList, setWishList }) => {
 					position: "top",
 					isClosable: true,
 				});
-				const filteredWL = wishList.filter((game) => game.id !== id);
+				const filteredWL = wishList.filter(
+					(game) => game?.id?.toString() !== id?.toString()
+				);
 				setWishList(filteredWL);
-				navigate(0);
 			}
 		} catch (error) {
 			console.log("error from removeGame()", error);

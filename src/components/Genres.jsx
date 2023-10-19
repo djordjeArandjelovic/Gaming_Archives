@@ -35,6 +35,7 @@ import {
 import { MdPhoneIphone } from "react-icons/md";
 import { SiNintendo } from "react-icons/si";
 import { BsGlobe } from "react-icons/bs";
+import { EventBus } from "../EventBus";
 
 const Genres = ({
 	onSelectGenre,
@@ -98,21 +99,28 @@ const Genres = ({
 		if (!user) {
 			return;
 		}
+		const handleGameAdded = () => {
+			const userFavGames = collection(db, "users", user?.uid, "favourites");
+			const favQuery = query(userFavGames);
 
-		const userFavGames = collection(db, "users", user?.uid, "favourites");
-		const favQuery = query(userFavGames);
+			getDocs(favQuery)
+				.then((querySnapshot) => {
+					const games = [];
+					querySnapshot.forEach((doc) => {
+						games.push(doc?.data());
+					});
+					setWishList(games);
+				})
+				.catch((err) =>
+					console.log("error from useEffect Genres (querySnapshot)", err)
+				);
+		};
+		handleGameAdded();
+		EventBus.on("gameAddedToWishlist", handleGameAdded);
 
-		getDocs(favQuery)
-			.then((querySnapshot) => {
-				const games = [];
-				querySnapshot.forEach((doc) => {
-					games.push(doc?.data());
-				});
-				setWishList(games);
-			})
-			.catch((err) =>
-				console.log("error from useEffect Genres (querySnapshot)", err)
-			);
+		return () => {
+			EventBus.off("gameAddedToWishlist", handleGameAdded);
+		};
 	}, [user]);
 
 	if (isLoading) return <Spinner />;
