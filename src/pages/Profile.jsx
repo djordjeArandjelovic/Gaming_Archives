@@ -50,7 +50,7 @@ const Profile = ({ wishList, setWishList }) => {
 			return;
 		}
 
-		const userFavGames = collection(db, "users", user?.uid, "favourites");
+		const userFavGames = collection(db, "users", user.uid, "favourites");
 		const favQuery = query(userFavGames);
 
 		getDocs(favQuery)
