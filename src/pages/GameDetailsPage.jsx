@@ -4,7 +4,7 @@ import GameDetails from "../components/GameDetails";
 import apiClient from "../services/api-client";
 import { useParams } from "react-router-dom";
 
-const GameDetailsPage = ({ wishlist }) => {
+const GameDetailsPage = () => {
 	const { id } = useParams();
 	const [data, setData] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
@@ -35,7 +35,7 @@ const GameDetailsPage = ({ wishlist }) => {
 		return (
 			<>
 				<NavBar />
-				<GameDetails wishlist={wishlist} data={data} isLoading={isLoading} />
+				<GameDetails data={data} isLoading={isLoading} />
 			</>
 		);
 	}

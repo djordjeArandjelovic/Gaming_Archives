@@ -13,11 +13,11 @@ const useData = (endpoint, requestConfig, deps = []) => {
 			.get(endpoint, { ...requestConfig }) // appended endoing && requestConfig = params
 			.then((res) => {
 				if (res) {
-					const parsedData = res.data.results.map((item) => ({
-						...item,
-						liked: false,
-					}));
-					setData(parsedData);
+					// const parsedData = res.data.results.map((item) => ({
+					// 	...item,
+					// 	liked: false,
+					// }));
+					setData(res.data.results);
 				}
 				setIsLoading(false);
 			})

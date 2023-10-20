@@ -28,10 +28,7 @@ function App() {
 						/>
 						<Route path="/login" element={<Login />} />
 						<Route path="/signup" element={<SignUp />} />
-						<Route
-							path="/games/:id"
-							element={<GameDetailsPage wishList={wishList} />}
-						/>
+						<Route path="/games/:id" element={<GameDetailsPage />} />
 						<Route path="*" element={<ErrorPage />} />
 					</Routes>
 				</AuthProvider>

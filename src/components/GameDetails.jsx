@@ -29,7 +29,7 @@ import { SiNintendo } from "react-icons/si";
 import { MdPhoneIphone } from "react-icons/md";
 import { BsGlobe } from "react-icons/bs";
 
-const GameDetails = ({ data, isLoading, wishlist }) => {
+const GameDetails = ({ data, isLoading }) => {
 	const toast = useToast();
 	const [fullText, setFullText] = useState(false);
 
@@ -39,7 +39,7 @@ const GameDetails = ({ data, isLoading, wishlist }) => {
 	};
 
 	const limitText = () => {
-		const words = data?.description_raw.split(" ");
+		const words = data?.description_raw?.split(" ");
 		if (words?.length <= 150) return data?.description_raw;
 		return words?.slice(0, 150).join(" ");
 	};
