@@ -2,7 +2,7 @@
 
 Welcome to **The Gaming Archives**! Think of it as IMDB, but dedicated to the world of video games. Explore detailed game profiles, or sign up to personalize your experience and curate a wishlist of your dream games.
 
-![Screenshot of The Gaming Archives homepage](src/assets/Gaming_Archives_Project.jpg) <!-- Replace with actual path to your screenshot -->
+![Screenshot of The Gaming Archives homepage](src/assets/Gaming_Archives_Project.jpg)
 
 ## Table of Contents
 
