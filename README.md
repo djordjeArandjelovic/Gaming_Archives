@@ -19,8 +19,9 @@ To get The Gaming Archives running locally:
 3. Run the following commands:
    ```shell
    npm install
-   npm run dev // Your application should now be running at http://localhost:3000/ (or your specified port).
+   npm run dev
    ```
+   // Your application should now be running at http://localhost:3000/ (or your specified port).
 4. Or simply go to https://boisterous-meringue-c0d83d.netlify.app/ to check out the live website.
 
 ## Usage
